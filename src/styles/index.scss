@@ -1,0 +1,125 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ' ';
+    clear: both;
+    height: 0;
+  }
+}
+
+// main-container global css
+.app-container {
+  padding: 20px;
+}
+.el-card.is-always-shadow {
+  box-shadow: none !important;
+}
+
+.el-dialog {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*height:600px;*/
+  max-height: calc(100% - 30px);
+  max-width: calc(100% - 30px);
+}
+.el-dialog .el-dialog__body {
+  flex: 1;
+  overflow: auto;
+}
+
+.dialog-form {
+  // width: 450px;
+  .el-form-item__content {
+    max-width: 300px;
+  }
+  .no-limit-whdth .el-form-item__content {
+    max-width: none;
+  }
+  .el-cascader {
+    width: 100%;
+  }
+  .el-select {
+    width: 100%;
+  }
+  .el-date-editor.el-input {
+    width: 100%;
+  }
+}
+.rule-form {
+  .el-cascader {
+    width: 100%;
+  }
+  .el-select {
+    width: 100%;
+  }
+  .el-date-editor.el-input {
+    width: 100%;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+  .print-dialog {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

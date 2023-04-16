@@ -39,7 +39,7 @@
           :loading="loading"
           size="large"
           type="primary"
-          style="width: 100%; margin-bottom: 30px"
+          style="width: 100%; margin-top: 30px; margin-bottom: 30px"
           @click.native.prevent="handleSubmit"
         >注 册</el-button>
         <div style="display: flex; justify-content: flex-end">
@@ -204,7 +204,7 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg: #fff;
+$bg: #ecf0f3;;
 $light_gray: #fff;
 $cursor: #fff;
 
@@ -233,7 +233,8 @@ $cursor: #fff;
       // caret-color: $cursor;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
+        // box-shadow: 0 0 0px 1000px $bg inset !important;
+        box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
         // -webkit-text-fill-color: $cursor !important;
       }
     }
@@ -253,7 +254,8 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid #f5f5f5;
+    // border: 1px solid #f5f5f5;
+    box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
     // background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
@@ -262,7 +264,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: #fff;
+$bg: #ecf0f3;;
 $dark_gray: #606266;
 $light_gray: #eee;
 
@@ -283,8 +285,8 @@ $light_gray: #eee;
     max-width: 90%;
     padding: 40px 40px;
     margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;
+    border-radius: 12px;
     overflow: hidden;
   }
 

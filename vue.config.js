@@ -25,7 +25,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/fire',
+  publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -38,11 +38,11 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/fire-api': {
+      '/template-api': {
         target: 'https://4948a578a0.yicp.fun',
         changeOrigin: true // 允许跨域
         // pathRewrite: {
-        //   '^/fire-api': ''
+        //   '^/template-api': ''
         // }
 
       }

@@ -2,7 +2,7 @@
   <div class="register-container">
     <el-form ref="loginForm" :model="ruleForm" :rules="rules" size="large" class="register-form" auto-complete="on">
       <div class="title-container">
-        <h3 class="title">管理员账号注册</h3>
+        <h3 class="title">账号注册</h3>
       </div>
 
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules">

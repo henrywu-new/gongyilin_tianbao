@@ -15,7 +15,7 @@ function getResHeadersFileName(headers) {
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 1000 * 60 * 2 // request timeout
 })

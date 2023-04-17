@@ -10,7 +10,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">湖南省乡镇（街道）森林防灭火值班管理</h3>
+        <h3 class="title">登录账号</h3>
       </div>
 
       <el-form-item prop="username">
@@ -237,7 +237,7 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 23px;
+      font-size: 26px;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;

@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import { get } from 'js-cookie'
 
 export const CommonApi = {
   // 保存天保信息

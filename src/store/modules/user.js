@@ -5,21 +5,23 @@ import { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
     token: getToken(),
+    id: '',
+    creator: '',
+    createDate: '',
+    updator: '',
+    updateDate: '',
+    version: '',
+    deleted: '',
+    username: '',
+    mobile: '',
+    province: '',
     city: '',
     country: '',
-    deptId: '',
-    deptName: '',
-    email: '',
-    gender: 2, // 性别 0：男 1：女 2：保密
-    id: '',
-    mobile: '',
-    password: '',
-    province: '',
-    realName: '',
-    roleIdList: [],
-    status: '',
     street: '',
-    username: ''
+    village: '',
+    admined: '',
+    userId: '',
+    attach: ''
   }
 }
 
@@ -42,7 +44,7 @@ const mutations = {
     state.avatar = avatar
   },
   SET_USER_INFO: (state, info) => {
-    Object.keys(state).forEach(key => {
+    Object.keys(state).forEach((key) => {
       state[key] = info[key] || state[key]
     })
   }
@@ -55,11 +57,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       CommonApi.login({ username: username.trim(), password: password })
         .then((response) => {
-          const { data } = response
-          commit('SET_TOKEN', data.token)
-          commit('SET_TOKEN', data.id)
-          localStorage.setItem('userid', data.id)
-          setToken(data.token)
+          const { body } = response
+          commit('SET_TOKEN', body.attach)
+          localStorage.setItem('userInfo', JSON.stringify(body))
+          setToken(body.attach)
           resolve()
         })
         .catch((error) => {

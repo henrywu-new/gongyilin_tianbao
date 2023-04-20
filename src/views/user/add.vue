@@ -24,12 +24,15 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="ruleForm.password" />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="村庄" prop="village">
+          <el-input v-model="ruleForm.village" />
+        </el-form-item>
+        <!-- <el-form-item label="状态" prop="status">
           <el-radio-group v-model="ruleForm.status">
             <el-radio :label="0">停用</el-radio>
             <el-radio :label="1">启用</el-radio>
           </el-radio-group>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('ruleForm')">取消</el-button>
@@ -47,14 +50,15 @@ const ruleForm = {
   street: '',
   mobile: '',
   password: '',
-  status: 1
+  village: ''
+  // status: 1
 }
 
 const provinceCode = 430000
 
 async function getAreaList(pcode = 100000) {
-  const { data, code } = await CommonApi.getAreaList(pcode)
-  return code === 0 ? data : []
+  const { body, code } = await CommonApi.getAreaList(pcode)
+  return code === 0 ? body : []
 }
 
 export default {
@@ -111,20 +115,20 @@ export default {
       if (this.loading) return
       this.loading = true
       const { region } = this.ruleForm
-      const [city, country, streetCode] = region
-      const { data } = await CommonApi.getAreaDetail(streetCode)
-      const street = data.name
+      const [city, country, street] = region
+      // const { body } = await CommonApi.getAreaByCode(streetCode)
+      // const street = body.name
       const params = {
         ...this.ruleForm,
         province: provinceCode,
         city,
         country,
-        street,
-        streetCode
+        street
+        // streetCode
       }
       delete params.region
 
-      const { code } = await UserApi.addUser(params)
+      const { code } = await CommonApi.addAccount(params)
       if (code === 0) {
         this.$message.success('添加用户成功！')
         this.$router.go(-1)

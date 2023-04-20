@@ -6,7 +6,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/tempearl-allowance`,
       method: 'post',
-      data,
+      data
     })
   },
   // 更新天保信息
@@ -14,14 +14,14 @@ export const CommonApi = {
     return request({
       url: `/template-api/tempearl-allowance`,
       method: 'put',
-      data,
+      data
     })
   },
   // 天保相差
   getTbDiff: () => {
     return request({
       url: `/template-api/tempearl-allowance/diff`,
-      method: 'get',
+      method: 'get'
     })
   },
   // 天保查询
@@ -29,7 +29,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/tempearl-allowance/search`,
       method: 'get',
-      params,
+      params
     })
   },
   // 乡村天保相差
@@ -37,7 +37,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/tempearl-allowance/selectDiff`,
       method: 'get',
-      params,
+      params
     })
   },
   // 导入天保上一年度数据
@@ -45,14 +45,14 @@ export const CommonApi = {
     return request({
       url: `/template-api/tempearl-allowance/upload`,
       method: 'post',
-      data,
+      data
     })
   },
   // 删除天保数据
   delTbData(id) {
     return request({
       url: `/template-api/tempearl-allowance/${id}`,
-      method: 'delete',
+      method: 'delete'
     })
   },
   // 乡村信息查询
@@ -60,7 +60,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/area-village`,
       method: 'get',
-      params,
+      params
     })
   },
   // 保存乡村信息
@@ -68,7 +68,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/area-village`,
       method: 'post',
-      data,
+      data
     })
   },
   // 更新乡村信息
@@ -76,7 +76,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/area-village`,
       method: 'put',
-      data,
+      data
     })
   },
   // 新增用户基础数据
@@ -84,7 +84,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-userinfo`,
       method: 'post',
-      data,
+      data
     })
   },
   // 更新用户基础数据
@@ -92,7 +92,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-userinfo`,
       method: 'put',
-      data,
+      data
     })
   },
   // 查询用户列表
@@ -100,7 +100,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-userinfo/search`,
       method: 'get',
-      params,
+      params
     })
   },
   // 导入用户数据
@@ -108,7 +108,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-userinfo/upload`,
       method: 'post',
-      data,
+      data
     })
   },
   // 添加账号
@@ -116,7 +116,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/account`,
       method: 'post',
-      data,
+      data
     })
   },
   // 更新账号
@@ -124,7 +124,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/account`,
       method: 'put',
-      data,
+      data
     })
   },
   // login
@@ -132,14 +132,14 @@ export const CommonApi = {
     return request({
       url: `/template-api/account/login`,
       method: 'post',
-      data,
+      data
     })
   },
   // logout
   logout() {
     return request({
       url: `/template-api/account/logout`,
-      method: 'get',
+      method: 'get'
     })
   },
   // register
@@ -147,7 +147,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/account/register`,
       method: 'psot',
-      data,
+      data
     })
   },
   // 获取账号列表
@@ -155,14 +155,14 @@ export const CommonApi = {
     return request({
       url: `/template-api/account/search`,
       method: 'get',
-      params,
+      params
     })
   },
   // 删除账号
   delAccountById(id) {
     return request({
       url: `/template-api/account/${id}`,
-      method: 'delete',
+      method: 'delete'
     })
   },
   // 保存基本配置
@@ -170,7 +170,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-config`,
       method: 'post',
-      data,
+      data
     })
   },
   // 更新基本配置
@@ -178,7 +178,7 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-config`,
       method: 'put',
-      data,
+      data
     })
   },
   // 基本配置查询
@@ -186,16 +186,28 @@ export const CommonApi = {
     return request({
       url: `/template-api/base-config/search`,
       method: 'get',
-      params,
+      params
     })
   },
   // 删除基本配置
   delBaseInfoById(id) {
     return request({
       url: `/template-api/base-config/${id}`,
-      method: 'delete',
+      method: 'delete'
     })
   },
+  getAreaByCode(code) {
+    return request({
+      url: `/template-api/area/getOne/${code}`,
+      method: 'get'
+    })
+  },
+  getAreaList(pcode) {
+    return request({
+      url: `/template-api/area/list/${pcode}`,
+      method: 'get'
+    })
+  }
 }
 
 export default CommonApi

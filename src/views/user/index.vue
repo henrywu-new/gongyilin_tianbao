@@ -6,10 +6,10 @@
           <el-input v-model="queryParams.username" placeholder="姓名" />
         </el-form-item>
         <el-form-item label="电话">
-          <el-input v-model="queryParams.phone" placeholder="电话" />
+          <el-input v-model="queryParams.mobile" placeholder="电话" />
         </el-form-item>
-        <el-form-item label="乡镇（街道）名称">
-          <el-input v-model="queryParams.streetName" placeholder="乡镇（街道）名称" />
+        <el-form-item label="村庄">
+          <el-input v-model="queryParams.village" placeholder="村庄" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="loading" @click="onSearch">查询</el-button>
@@ -45,7 +45,7 @@
               }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="street" label="乡镇（街道）名称" width="180" />
+        <el-table-column prop="street" label="村庄" width="180" />
         <el-table-column prop="status" label="关联模板" min-width="180">
           <template slot-scope="scope">
             <el-select
@@ -212,8 +212,8 @@ export default {
       selectId: '',
       queryParams: {
         username: '',
-        phone: '',
-        streetName: ''
+        mobile: '',
+        village: ''
       },
       templateList: [],
       value: ''
@@ -239,7 +239,7 @@ export default {
       const { page, size } = this
       const params = { ...this.queryParams, page, size }
       this.loading = true
-      const { data, code } = await UserApi.getUsers(params)
+      const { data, code } = await CommonApi.getUserList(params)
       this.loading = false
       if (code !== 0) return
       this.userList = data.list

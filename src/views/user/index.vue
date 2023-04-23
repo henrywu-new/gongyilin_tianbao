@@ -45,27 +45,18 @@
               }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="street" label="村庄" width="180" />
-        <el-table-column prop="status" label="关联模板" min-width="180">
+        <el-table-column prop="village" label="村庄" width="180">
           <template slot-scope="scope">
-            <el-select
-              v-model="scope.row.templateId"
-              clearable
-              placeholder="请选择模板"
-              @change="onChange(scope.row)"
-              @clear="delTemplateRelation(scope.row)"
-            >
-              <el-option v-for="item in templateList" :key="item.id" :label="item.templateName" :value="item.id" />
-            </el-select>
+            <span> {{ scope.row.village || '---' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="状态" :width="80">
+        <el-table-column prop="status" label="状态">
           <template slot-scope="scope">
             <span v-if="scope.row.status == 0">停用</span>
             <span v-else>启用</span>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="260">
+        <el-table-column fixed="right" label="操作" width="160">
           <template slot-scope="scope">
             <el-button style="margin-right: 10px" type="primary" plain @click="handleEdit(scope.row)"> 修改 </el-button>
             <el-popconfirm
@@ -78,7 +69,7 @@
                 删除
               </el-button>
             </el-popconfirm>
-            <el-popconfirm
+            <!-- <el-popconfirm
               title="确定重置密码吗？"
               @confirm="resetPasword(scope.row.id)"
               @onConfirm="resetPasword(scope.row.id)"
@@ -86,7 +77,7 @@
               <el-button slot="reference" type="warning" plain :loading="selectId === scope.row.id && loading2">
                 重置密码
               </el-button>
-            </el-popconfirm>
+            </el-popconfirm> -->
           </template>
         </el-table-column>
       </el-table>
@@ -100,53 +91,6 @@
         />
       </div>
     </el-card>
-    <el-dialog :title="dialogTitle" :visible.sync="visible" width="50%" center :before-close="beforeClose">
-      <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="dialog-form">
-        <el-form-item label="地区" prop="region">
-          <el-cascader v-model="ruleForm.region" :props="props" filterable placeholder="请选择地址" />
-        </el-form-item>
-        <el-form-item label="详情地址" prop="street">
-          <el-input v-model="ruleForm.street" type="textarea" maxlength="200" />
-        </el-form-item>
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="ruleForm.username" maxlength="20" />
-        </el-form-item>
-        <!-- <el-form-item label="用户头像" prop="headUrl">
-          <el-upload
-            class="avatar-uploader"
-            accept="image/*"
-            action=""
-            :show-file-list="false"
-            :on-success="beforeUploadSucc"
-            :before-upload="beforeUpload"
-            :http-request="handleUpload"
-          >
-            <img
-              v-if="ruleForm.headUrl"
-              :src="ruleForm.headUrl"
-              class="avatar"
-            >
-            <i v-else class="el-icon-plus avatar-uploader-icon" />
-          </el-upload>
-        </el-form-item> -->
-        <el-form-item label="电话" prop="mobile">
-          <el-input v-model.number="ruleForm.mobile" maxlength="11" />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="ruleForm.password" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="ruleForm.status">
-            <el-radio :label="0">停用</el-radio>
-            <el-radio :label="1">启用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">取消</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 
@@ -231,7 +175,7 @@ export default {
   // },
   mounted() {
     this.getUsers()
-    this.getTemplateList()
+    // this.getTemplateList()
   },
   methods: {
     async getUsers() {
@@ -239,11 +183,11 @@ export default {
       const { page, size } = this
       const params = { ...this.queryParams, page, size }
       this.loading = true
-      const { data, code } = await CommonApi.getUserList(params)
+      const { body, code } = await CommonApi.getAccountList(params)
       this.loading = false
       if (code !== 0) return
-      this.userList = data.list
-      this.total = data.total
+      this.userList = body.list
+      this.total = body.total
     },
     onSearch() {
       this.page = 1
@@ -356,8 +300,6 @@ export default {
           // alert('submit!')
           if (this.type === 1) {
             this.addUser()
-          } else {
-            this.updateUserInfo()
           }
         } else {
           console.log('error submit!!')
@@ -385,51 +327,12 @@ export default {
         this.$message.error('添加用户失败！')
       }
     },
-
-    async updateUserInfo() {
-      const { region } = this.ruleForm
-      let params = { ...this.ruleForm }
-
-      if (region && region.length) {
-        const [province, city, country] = region
-        params = {
-          province,
-          city,
-          country,
-          ...this.ruleForm
-        }
-        delete params.region
-      }
-      if (!params.password) delete params.password
-      const { code } = await UserApi.updateUserInfo(params)
-      if (code === 0) {
-        this.visible = false
-        this.$message.success('用户信息更新成功！')
-        this.getUsers()
-      } else {
-        this.$message.success('用户信息更新失败！')
-      }
-    },
-
-    async resetPasword(id) {
-      if (this.loading2) return
-
-      this.loading2 = true
-      this.selectId = id
-      const { code } = await UserApi.resetPasword(id)
-      if (code === 0) {
-        this.$message.success('重置密码成功！')
-      } else {
-        this.$message.error('重置密码失败！')
-      }
-      this.loading2 = false
-    },
     async deleteUser(id) {
       if (this.loading3) return
 
       this.loading3 = true
       this.selectId = id
-      const { code } = await UserApi.deleteUser(id)
+      const { code } = await CommonApi.delAccountById(id)
       if (code === 0) {
         this.$message.success('删除用户成功！')
         this.getUsers()

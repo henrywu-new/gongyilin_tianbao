@@ -24,11 +24,8 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="ruleForm.password" />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="ruleForm.status">
-            <el-radio :label="0">停用</el-radio>
-            <el-radio :label="1">启用</el-radio>
-          </el-radio-group>
+        <el-form-item label="村庄" prop="village">
+          <el-input v-model="ruleForm.village" />
         </el-form-item>
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -47,12 +44,12 @@ const ruleForm = {
   street: '',
   mobile: '',
   password: '',
-  status: ''
+  village: ''
 }
 
 async function getAreaList(pcode = 100000) {
-  const { data, code } = await CommonApi.getAreaList(pcode)
-  return code === 0 ? data : []
+  const { body, code } = await CommonApi.getAreaList(pcode)
+  return code === 0 ? body : []
 }
 const provinceCode = 430000
 
@@ -95,15 +92,15 @@ export default {
   created() {
     console.log(this.$route)
     const { params } = this.$route
-    const { id, username, region, street, mobile, password, status } = params.userinfo || ruleForm
+    const { id, username, city, country, street, village, mobile } = params.userinfo || ruleForm
     this.ruleForm = {
       id,
       username,
-      region,
+      region: [city, country, street],
       street,
       mobile,
-      password,
-      status
+      password: '',
+      village
     }
   },
   methods: {
@@ -129,35 +126,33 @@ export default {
       let params = { ...this.ruleForm }
 
       if (region && region.length) {
-        const [city, country, streetCode] = region
-        const { data } = await CommonApi.getAreaDetail(streetCode)
-        const street = data.name
+        const [city, country, street] = region
         params = {
           ...this.ruleForm,
           province: provinceCode,
           city,
           country,
-          street,
-          streetCode
+          street
         }
         delete params.region
       }
       if (!params.password) delete params.password
-      const { code } = await UserApi.updateUserInfo(params)
+      const { code } = await CommonApi.updateAccount(params)
       if (code === 0) {
         this.visible = false
-        const html = `<strong>乡镇森林防灭火值班管理系统</strong><br/><span>软件开发：湖南省平江县大洲乡农业综合服务中心 钟咨 邱河海 何旭东  
-            <br/>2023年软件使用联系：13874099950（微信）</span><br/>
-          <img src="${this.qrcode}" style="display: block; width: 120px; height: 120px; margin: 10px auto" />
-          `
-        this.$alert(html, '用户信息更新成功！', {
-          dangerouslyUseHTMLString: true,
-          callback: () => {
-            this.$router.go(-1)
-          }
-        })
-      } else {
         this.$message.success('用户信息更新失败！')
+        // const html = `<strong>乡镇森林防灭火值班管理系统</strong><br/><span>软件开发：湖南省平江县大洲乡农业综合服务中心 钟咨 邱河海 何旭东
+        //     <br/>2023年软件使用联系：13874099950（微信）</span><br/>
+        //   <img src="${this.qrcode}" style="display: block; width: 120px; height: 120px; margin: 10px auto" />
+        //   `
+        // this.$alert(html, '用户信息更新成功！', {
+        //   dangerouslyUseHTMLString: true,
+        //   callback: () => {
+        //     this.$router.go(-1)
+        //   }
+        // })
+      } else {
+        this.$message.error('用户信息更新失败！')
       }
       this.loading = false
     }

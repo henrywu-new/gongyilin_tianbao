@@ -3,13 +3,23 @@
     <el-card class="box-card">
       <el-form :inline="true" :model="queryParams" class="demo-form-inline">
         <el-form-item label="姓名">
-          <el-input v-model="queryParams.username" placeholder="姓名" />
+          <el-input v-model="queryParams.name" placeholder="姓名" />
         </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="queryParams.mobile" placeholder="电话" />
+        <el-form-item label="手机号">
+          <el-input v-model="queryParams.phone" placeholder="手机号" />
         </el-form-item>
-        <el-form-item label="村庄">
-          <el-input v-model="queryParams.village" placeholder="村庄" />
+        <el-form-item label="身份证">
+          <el-input v-model="queryParams.idcard" placeholder="身份证" />
+        </el-form-item>
+        <el-form-item label="添加日期">
+          <el-date-picker
+            v-model="queryParams.date"
+            type="daterange"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="loading" @click="onSearch">查询</el-button>
@@ -19,7 +29,7 @@
     </el-card>
     <el-card class="box-card" style="margin-top: 24px">
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
-        <el-button type="primary" @click="() => $router.push('/user/add')">添加管理员</el-button>
+        <el-button type="primary" @click="() => $router.push('/user/baseinfo/add')">添加用户基础数据</el-button>
         <el-button type="primary" plain>{{ `总人数：${total}` }}</el-button>
       </div>
       <el-table v-loading="loading" :data="userList" style="width: 100%">
@@ -33,35 +43,21 @@
             <span> {{ scope.row.updateDate || '---' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="姓名" width="140" />
-        <el-table-column prop="mobile" label="电话" width="120" />
-        <el-table-column prop="cityName" label="市区" width="180">
-          <template slot-scope="scope">
-            <span>
-              {{
-                `${scope.row.provinceName || '---'} / ${scope.row.cityName || '---'} / ${
-                  scope.row.countryName || '---'
-                }`
-              }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="village" label="村庄" width="180">
-          <template slot-scope="scope">
-            <span> {{ scope.row.village || '---' }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="status" label="状态">
-          <template slot-scope="scope">
-            <span v-if="scope.row.status == 0">停用</span>
-            <span v-else>启用</span>
-          </template>
-        </el-table-column>
+        <el-table-column prop="name" label="姓名" width="100" />
+        <el-table-column prop="phone" label="电话" width="120" />
+        <el-table-column prop="homeNo" label="户口本号" width="120" />
+        <el-table-column prop="idcard" label="身份证号码" width="120" />
+        <el-table-column prop="familyAddress" label="家庭地址" width="180" />
+        <el-table-column prop="bankName" label="银行名称" width="180" />
+        <el-table-column prop="bankCode" label="银行代码" width="120" />
+        <el-table-column prop="street" label="所属乡镇" width="180" />
+        <el-table-column prop="familyMember" label="家庭成员数" />
         <el-table-column fixed="right" label="操作" width="160">
           <template slot-scope="scope">
             <el-button style="margin-right: 10px" type="primary" plain @click="handleEdit(scope.row)"> 修改 </el-button>
             <el-popconfirm
               style="margin-right: 10px"
-              title="确定删除该用户吗？"
+              title="确定删除吗？"
               @confirm="deleteUser(scope.row.id)"
               @onConfirm="deleteUser(scope.row.id)"
             >
@@ -69,15 +65,6 @@
                 删除
               </el-button>
             </el-popconfirm>
-            <!-- <el-popconfirm
-              title="确定重置密码吗？"
-              @confirm="resetPasword(scope.row.id)"
-              @onConfirm="resetPasword(scope.row.id)"
-            >
-              <el-button slot="reference" type="warning" plain :loading="selectId === scope.row.id && loading2">
-                重置密码
-              </el-button>
-            </el-popconfirm> -->
           </template>
         </el-table-column>
       </el-table>
@@ -95,24 +82,12 @@
 </template>
 
 <script>
-import { CommonApi, UserApi, TemplateApi } from '@/api'
-const id = 0
-const ruleForm = {
-  username: '',
-  region: [],
-  street: '',
-  mobile: '',
-  password: '',
-  status: ''
-}
+import { CommonApi } from '@/api'
 
 export default {
   name: 'User',
   data() {
     return {
-      visible: false,
-      dialogTitle: '添加管理员',
-      ruleForm: { ...ruleForm },
       page: 1,
       size: 15,
       total: 0,
@@ -123,11 +98,12 @@ export default {
       loading3: false,
       selectId: '',
       queryParams: {
-        username: '',
-        mobile: '',
-        village: ''
+        name: '',
+        phone: '',
+        village: '',
+        idcard: '',
+        date: []
       },
-      templateList: [],
       value: ''
     }
   },
@@ -138,9 +114,15 @@ export default {
     async getUsers() {
       if (this.loading) return
       const { page, size } = this
-      const params = { ...this.queryParams, page, size }
+      const { name, phone, village, idcard, date } = this.queryParams
+      let [startTime, endTime] = date
+
+      startTime = startTime ? startTime + ' 00:00:00' : ''
+      endTime = endTime ? endTime + ' 23:59:59' : ''
+
+      const params = { name, phone, village, idcard, startTime, endTime, page, size }
       this.loading = true
-      const { body, code } = await CommonApi.getAccountList(params)
+      const { body, code } = await CommonApi.getUserList(params)
       this.loading = false
       if (code !== 0) return
       this.userList = body.list
@@ -177,35 +159,13 @@ export default {
       }
       this.loading3 = false
     },
-    handleEdit(userinfo) {
-      this.$router.push({ name: 'userEdit', params: { userinfo }})
+    handleEdit(baseinfo) {
+      this.$router.push({ name: 'baseinfEdit', params: { baseinfo }})
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-::v-deep .avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 120px;
-  height: 120px;
-  line-height: 120px;
-  text-align: center;
-}
-.avatar {
-  width: 120px;
-  height: 120px;
-  display: block;
-}
+  <style lang="scss" scoped>
 </style>
+

@@ -106,6 +106,45 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/user/base',
+    component: Layout,
+    redirect: '/user/baseinfo',
+    name: 'userBase',
+    meta: { roles: ['admin'] },
+    children: [
+      {
+        path: '/user/baseinfo',
+        meta: {
+          title: '用户基础数据',
+          roles: ['admin'],
+          icon: 'el-icon-user-solid'
+        },
+        component: () => import('@/views/baseinfo/index')
+      },
+      {
+        path: '/user/baseinfo/add',
+        meta: {
+          title: '添加用户基础数据',
+          roles: ['admin'],
+          icon: 'el-icon-user-solid'
+        },
+        component: () => import('@/views/baseinfo/add'),
+        hidden: true
+      },
+      {
+        path: '/user/baseinfo/edit',
+        name: 'baseinfEdit',
+        meta: {
+          title: '修改用户基础数据',
+          roles: ['admin'],
+          icon: 'el-icon-user-solid'
+        },
+        component: () => import('@/views/baseinfo/edit'),
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/operate',
     component: Layout,
     redirect: '/operate/log',

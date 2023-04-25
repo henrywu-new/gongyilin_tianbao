@@ -63,7 +63,7 @@ export const constantRoutes = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '乡镇值班管理系统', icon: 'dashboard' }
+        meta: { title: '管理系统', icon: 'dashboard' }
       }
     ]
   },
@@ -145,16 +145,30 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/operate',
+    path: '/baseconfig',
     component: Layout,
-    redirect: '/operate/log',
+    redirect: '/baseconfig',
     meta: { roles: ['admin'] },
     children: [
       {
-        path: '/operate/log',
-        name: 'OperateLog',
-        component: () => import('@/views/operate/log'),
-        meta: { title: '操作日志', roles: ['admin'], icon: 'el-icon-s-platform' }
+        path: '/baseconfigg',
+        name: 'baseconfig',
+        component: () => import('@/views/baseconfig'),
+        meta: { title: '配置基本数据', roles: ['admin'], icon: 'el-icon-s-platform' }
+      },
+      {
+        path: '/baseconfigg/add',
+        name: 'baseconfigAdd',
+        component: () => import('@/views/baseconfig/add'),
+        meta: { title: '添加基本数据', roles: ['admin'], icon: 'el-icon-s-platform' },
+        hidden: true
+      },
+      {
+        path: '/baseconfigg/edit',
+        name: 'baseconfigEdit',
+        component: () => import('@/views/baseconfig/edit'),
+        meta: { title: '修改基本数据', roles: ['admin'], icon: 'el-icon-s-platform' },
+        hidden: true
       }
     ]
   },

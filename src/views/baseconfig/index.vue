@@ -2,14 +2,15 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-form :inline="true" :model="queryParams" class="demo-form-inline">
-        <el-form-item label="姓名">
-          <el-input v-model="queryParams.name" placeholder="姓名" />
+        <el-form-item label="权属">
+          <el-select v-model="queryParams.ownership" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="手机号">
-          <el-input v-model="queryParams.phone" placeholder="手机号" />
-        </el-form-item>
-        <el-form-item label="身份证">
-          <el-input v-model="queryParams.idcard" placeholder="身份证" />
+        <el-form-item label="操作类型">
+          <el-select v-model="queryParams.operateType" placeholder="请选择">
+            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </el-form-item>
         <el-form-item label="添加日期">
           <el-date-picker
@@ -30,12 +31,8 @@
     <el-card class="box-card" style="margin-top: 24px">
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
         <div style="display: flex; gap: 10px">
-          <el-button type="primary" @click="() => $router.push('/user/baseinfo/add')">添加用户基础数据</el-button>
-          <el-upload action="" :before-upload="beforeUpload" :show-file-list="false" :http-request="handleUpload">
-            <el-button type="primary">导入用户基础数据</el-button>
-          </el-upload>
+          <el-button type="primary" @click="() => $router.push('/baseconfigg/add')">添加基础配置</el-button>
         </div>
-        <el-button type="primary" plain>{{ `总人数：${total}` }}</el-button>
       </div>
       <el-table v-loading="loading" :data="userList" style="width: 100%">
         <el-table-column prop="createDate" label="添加日期" width="140">
@@ -48,23 +45,28 @@
             <span> {{ scope.row.updateDate || '---' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="100" />
-        <el-table-column prop="phone" label="电话" width="120" />
-        <el-table-column prop="homeNo" label="户口本号" width="120" />
-        <el-table-column prop="idcard" label="身份证号码" width="120" />
-        <el-table-column prop="familyAddress" label="家庭地址" width="180" />
-        <el-table-column prop="bankName" label="银行名称" width="180" />
-        <el-table-column prop="bankCode" label="银行代码" width="120" />
-        <el-table-column prop="street" label="所属乡镇" width="180" />
-        <el-table-column prop="familyMember" label="家庭成员数" />
+        <el-table-column prop="area" label="补助面积（单位亩）" width="140" />
+        <el-table-column prop="areaUnit" label="补助标准单位（元/亩）" width="160" />
+        <el-table-column prop="operateType" label="操作类型" width="120">
+          <template slot-scope="scope">
+            <span> {{ fmtValue(options2, scope.row.operateType) || '---' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="ownership" label="权属" width="120">
+          <template slot-scope="scope">
+            <span> {{ fmtValue(options, scope.row.ownership) || '---' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="street" label="乡镇" width="180" />
+        <el-table-column prop="village" label="村落" />
         <el-table-column fixed="right" label="操作" min-width="200">
           <template slot-scope="scope">
             <el-button style="margin-right: 10px" type="primary" plain @click="handleEdit(scope.row)"> 修改 </el-button>
             <el-popconfirm
               style="margin-right: 10px"
               title="确定删除吗？"
-              @confirm="deleteUser(scope.row)"
-              @onConfirm="deleteUser(scope.row)"
+              @confirm="handleDelete(scope.row)"
+              @onConfirm="handleDelete(scope.row)"
             >
               <el-button slot="reference" type="danger" plain :loading="selectId === scope.row.id && loading3">
                 删除
@@ -76,7 +78,7 @@
       <div style="display: flex; justify-content: flex-end; margin-top: 20px">
         <el-pagination
           background
-          layout="prev, pager, next"
+          layout="total, prev, pager, next"
           :total="total"
           :page-size="size"
           @current-change="onPageChange"
@@ -103,31 +105,59 @@ export default {
       loading3: false,
       selectId: '',
       queryParams: {
-        name: '',
-        phone: '',
-        village: '',
-        idcard: '',
+        ownership: '',
+        operateType: '',
         date: []
       },
-      value: ''
+      value: '',
+      options: [
+        // 0-个人，1-集体，2-非国有，3-国有
+        {
+          label: '个人',
+          value: 0
+        },
+        {
+          label: '集体',
+          value: 1
+        },
+        {
+          label: '非国有',
+          value: 2
+        },
+        {
+          label: '国有',
+          value: 3
+        }
+      ],
+      options2: [
+        // 0-公益林，1-天保
+        {
+          label: '公益林',
+          value: 0
+        },
+        {
+          label: '天保',
+          value: 1
+        }
+      ]
     }
   },
   mounted() {
-    this.getUsers()
+    this.getList()
   },
   methods: {
-    async getUsers() {
+    async getList() {
       if (this.loading) return
       const { page, size } = this
-      const { name, phone, village, idcard, date } = this.queryParams
+      const { ownership, operateType, date } = this.queryParams
       let [startTime, endTime] = date
 
       startTime = startTime ? startTime + ' 00:00:00' : ''
       endTime = endTime ? endTime + ' 23:59:59' : ''
 
-      const params = { name, phone, village, idcard, startTime, endTime, page, size }
+      const params = { ownership, operateType, startTime, endTime, page, size }
       this.loading = true
-      const { body, code } = await CommonApi.getUserList(params)
+      const { body, code } = await CommonApi.getBaseInfoList(params)
       this.loading = false
       if (code !== 0) return
       this.userList = body.list
@@ -135,7 +165,7 @@ export default {
     },
     onSearch() {
       this.page = 1
-      this.getUsers()
+      this.getList()
     },
     onReset() {
       this.queryParams = {
@@ -143,11 +173,19 @@ export default {
         phone: '',
         streetName: ''
       }
-      this.getUsers()
+      this.getList()
     },
+
+    fmtValue(options, value) {
+      const target = options.find((item) => {
+        return item.value == value
+      })
+      return target?.label || ''
+    },
+
     onPageChange(page) {
       this.page = page
-      this.getUsers()
+      this.getList()
     },
     beforeUpload() {},
     async handleUpload({ file }) {
@@ -155,30 +193,30 @@ export default {
       formData.append('file', file)
       await CommonApi.uploadUsers(formData)
       this.$message.success('导入用户信息成功！')
-      this.getUsers()
+      this.getList()
     },
 
-    async deleteUser({ id }) {
+    async handleDelete({ id }) {
       if (this.loading3) return
 
       this.loading3 = true
       this.selectId = id
-      const { code } = await CommonApi.delAccountById(id)
+      const { code } = await CommonApi.delBaseInfoById(id)
       if (code === 0) {
-        this.$message.success('删除用户成功！')
-        this.getUsers()
+        this.$message.success('删除成功！')
+        this.getList()
       } else {
-        this.$message.error('删除用户失败！')
+        this.$message.error('删除失败！')
       }
       this.loading3 = false
     },
     handleEdit(baseinfo) {
-      this.$router.push({ name: 'baseinfEdit', query: { ...baseinfo }})
+      this.$router.push({ name: 'baseconfigEdit', query: { ...baseinfo }})
     }
   }
 }
 </script>
 
-  <style lang="scss" scoped>
+    <style lang="scss" scoped>
 </style>
 

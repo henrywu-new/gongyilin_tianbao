@@ -9,32 +9,24 @@
         style="margin-top: 40px"
         class="dialog-form"
       >
-        <el-form-item label="对象代码" prop="code">
-          <el-input v-model="ruleForm.code" />
+        <el-form-item label="补助面积" prop="area">
+          <el-input v-model="ruleForm.area" placeholder="单位亩" />
         </el-form-item>
-        <el-form-item label="对象姓名" prop="name">
-          <el-input v-model="ruleForm.name" maxlength="20" />
+        <el-form-item label="补助标准单位" prop="areaUnit">
+          <el-input v-model="ruleForm.areaUnit" placeholder="元/亩" />
         </el-form-item>
-        <el-form-item label="手机号码" prop="phone">
-          <el-input v-model.number="ruleForm.phone" maxlength="11" />
+        <el-form-item label="村落" prop="areaUnit">
+          <el-input v-model="ruleForm.village" placeholder="村落" />
         </el-form-item>
-        <el-form-item label="身份证号码" prop="idcard">
-          <el-input v-model="ruleForm.idcard" maxlength="18" />
+        <el-form-item label="权属">
+          <el-select v-model="ruleForm.ownership" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="户口本号" prop="homeNo">
-          <el-input v-model="ruleForm.homeNo" />
-        </el-form-item>
-        <el-form-item label="家庭地址" prop="familyAddress">
-          <el-input v-model="ruleForm.familyAddress" />
-        </el-form-item>
-        <el-form-item label="家庭成员数" prop="familyMember">
-          <el-input v-model="ruleForm.familyMember" />
-        </el-form-item>
-        <el-form-item label="银行名称" prop="bankName">
-          <el-input v-model="ruleForm.bankName" />
-        </el-form-item>
-        <el-form-item label="银行代码" prop="bankCode">
-          <el-input v-model="ruleForm.bankCode" />
+        <el-form-item label="操作类型">
+          <el-select v-model="ruleForm.operateType" placeholder="请选择">
+            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">修改</el-button>
@@ -48,45 +40,18 @@
 import { CommonApi } from '@/api'
 
 const ruleForm = {
-  code: '',
   id: '',
-  name: '',
-  phone: '',
-  idcard: '',
-  homeNo: '',
-  familyAddress: '',
-  familyMember: '',
-  bankName: '',
-  bankCode: ''
+  area: '',
+  areaUnit: '',
+  operateType: '',
+  ownership: '',
+  village: ''
 }
-
-// const provinceCode = 430000
-
-// async function getAreaList(pcode = 100000) {
-//   const { body, code } = await CommonApi.getAreaList(pcode)
-//   return code === 0 ? body : []
-// }
 
 export default {
   data() {
     return {
       ruleForm: { ...ruleForm },
-      // props: {
-      //   lazy: true,
-      //   lazyLoad: async function(node, resolve) {
-      //     const { value } = node
-      //     const pcode = value || provinceCode
-      //     const list = await getAreaList(pcode)
-
-      //     const nodes = list.map((item) => {
-      //       return {
-      //         value: item.code,
-      //         label: item.name
-      //       }
-      //     })
-      //     resolve(nodes)
-      //   }
-      // },
       rules: {
         // username: [
         //   { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -99,24 +64,50 @@ export default {
         // region: [{ required: true, message: '请选择地区', trigger: 'change' }],
         // status: [{ required: true, message: '请选择状态', trigger: 'change' }]
       },
-      loading: false
+      loading: false,
+      options: [
+        // 0-个人，1-集体，2-非国有，3-国有
+        {
+          label: '个人',
+          value: 0
+        },
+        {
+          label: '集体',
+          value: 1
+        },
+        {
+          label: '非国有',
+          value: 2
+        },
+        {
+          label: '国有',
+          value: 3
+        }
+      ],
+      options2: [
+        // 0-公益林，1-天保
+        {
+          label: '公益林',
+          value: 0
+        },
+        {
+          label: '天保',
+          value: 1
+        }
+      ]
     }
   },
   created() {
     const {
-      query: { code, id, name, phone, idcard, homeNo, familyAddress, familyMember, bankName, bankCode }
+      query: { id, area, areaUnit, operateType, ownership, village }
     } = this.$route
     this.ruleForm = {
-      code,
       id,
-      name,
-      phone,
-      idcard,
-      homeNo,
-      familyAddress,
-      familyMember,
-      bankName,
-      bankCode
+      area,
+      areaUnit,
+      operateType,
+      ownership,
+      village
     }
   },
   methods: {
@@ -142,7 +133,6 @@ export default {
       const params = {
         ...this.ruleForm
       }
-      delete params.region
 
       const { code } = await CommonApi.updateBaseInfo(params)
       if (code === 0) {

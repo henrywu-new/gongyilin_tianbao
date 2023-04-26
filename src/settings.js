@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '森林防火管理系统',
+  title: '管理系统',
 
   /**
    * @type {boolean} true | false

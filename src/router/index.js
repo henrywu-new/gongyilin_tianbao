@@ -49,12 +49,6 @@ export const constantRoutes = [
   },
 
   {
-    path: '/print',
-    component: () => import('@/views/print'),
-    hidden: true
-  },
-
-  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -172,106 +166,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/fire/index',
-    component: Layout,
-    redirect: '/fire',
-    name: 'fire',
-    meta: { title: '乡镇防火值班管理', roles: ['ordinary'], icon: 'el-icon-s-tools' },
-    children: [
-      {
-        path: '/fire',
-        name: 'fireInit',
-        meta: { title: '系统初始化', roles: ['ordinary'] },
-        component: () => import('@/views/fire/index')
-      },
-      {
-        path: '/fire/log',
-        name: 'logList',
-        meta: { title: '值班日志', roles: ['ordinary'] },
-        component: () => import('@/views/fire/log/index')
-      },
-      {
-        path: '/fire/log/add',
-        name: 'logAdd',
-        meta: { title: '添加值班日志', roles: ['ordinary'] },
-        component: () => import('@/views/fire/log/add'),
-        hidden: true
-      },
-      {
-        path: '/fire/log/edit',
-        name: 'logEdit',
-        meta: { title: '修改值班日志', roles: ['ordinary'] },
-        component: () => import('@/views/fire/log/edit'),
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/template/index',
-    component: Layout,
-    redirect: '/template',
-    name: 'template',
-    meta: { title: '模板管理', roles: ['admin'], icon: 'el-icon-s-order' },
-    children: [
-      {
-        path: '/template',
-        name: 'template',
-        meta: { title: '模板管理', roles: ['admin'] },
-        component: () => import('@/views/template/index')
-      },
-      {
-        path: '/template/add',
-        name: 'templateAdd',
-        meta: { title: '添加模板', roles: ['admin'] },
-        component: () => import('@/views/template/add'),
-        hidden: true
-      },
-      {
-        path: '/template/edit',
-        name: 'templateEdit',
-        meta: { title: '修改模板', roles: ['admin'] },
-        component: () => import('@/views/template/edit'),
-        hidden: true
-      }
-    ]
-  },
-  // {
-  //   path: '/connect',
-  //   component: Layout,
-  //   meta: { roles: ['ordinary'] },
-  //   // redirect: '/connect-us',
-  //   children: [
-  //     {
-  //       path: '/connect-us',
-  //       component: () => import('@/views/connect'),
-  //       meta: { title: '系统帮助', roles: ['ordinary'], icon: 'el-icon-s-promotion', target: '_blank' }
-  //     }
-  //   ]
-  // },
-  {
-    path: 'system-help',
-    component: Layout,
-    meta: { roles: ['ordinary'] },
-    children: [
-      {
-        path: 'https://s.r.sn.cn/nxCNAA',
-        meta: { title: '系统帮助', roles: ['ordinary'], icon: 'link', target: '_blank' }
-      }
-    ]
-  },
-  {
-    path: 'external-link',
-    component: Layout,
-    meta: { roles: ['ordinary'] },
-    children: [
-      {
-        path: 'https://s.r.sn.cn/HVNBtc',
-        meta: { title: '第三方拼图工具', roles: ['ordinary'], icon: 'link', target: '_blank' }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

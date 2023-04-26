@@ -145,10 +145,10 @@ export const constantRoutes = [
     meta: { roles: ['admin'] },
     children: [
       {
-        path: '/baseconfigg',
+        path: '/baseconfig',
         name: 'baseconfig',
         component: () => import('@/views/baseconfig'),
-        meta: { title: '配置基本数据', roles: ['admin'], icon: 'el-icon-s-platform' }
+        meta: { title: '配置基本数据', roles: ['admin'], icon: 'el-icon-setting' }
       },
       {
         path: '/baseconfigg/add',
@@ -164,6 +164,55 @@ export const constantRoutes = [
         meta: { title: '修改基本数据', roles: ['admin'], icon: 'el-icon-s-platform' },
         hidden: true
       }
+    ]
+  },
+  {
+    path: '/village',
+    component: Layout,
+    redirect: '/village',
+    meta: { roles: ['admin'] },
+    children: [
+      {
+        path: '/village',
+        name: 'village',
+        component: () => import('@/views/village'),
+        meta: { title: '村庄信息', roles: ['admin'], icon: 'el-icon-s-shop' }
+      },
+      {
+        path: '/village/add',
+        name: 'villageAdd',
+        component: () => import('@/views/village/add'),
+        meta: { title: '添加村庄', roles: ['admin'], icon: 'el-icon-s-platform' },
+        hidden: true
+      },
+      {
+        path: '/village/edit',
+        name: 'villageEdit',
+        component: () => import('@/views/village/edit'),
+        meta: { title: '添加村庄', roles: ['admin'], icon: 'el-icon-s-platform' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/gongyilin',
+    component: Layout,
+    redirect: '/gongyilin',
+    meta: { roles: ['admin'] },
+    children: [
+      {
+        path: '/gongyilin',
+        name: 'gongyilin',
+        component: () => import('@/views/gongyilin'),
+        meta: { title: '公益林', roles: ['admin'], icon: 'el-icon-s-shop' }
+      }
+      //   {
+      //     path: '/village/add',
+      //     name: 'villageAdd',
+      //     component: () => import('@/views/village/add'),
+      //     meta: { title: '添加村庄', roles: ['admin'], icon: 'el-icon-s-platform' },
+      //     hidden: true
+      //   },
     ]
   },
   // 404 page must be placed at the end !!!

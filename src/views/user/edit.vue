@@ -91,8 +91,8 @@ export default {
   },
   created() {
     console.log(this.$route)
-    const { params } = this.$route
-    const { id, username, city, country, street, village, mobile } = params.userinfo || ruleForm
+    const { query } = this.$route
+    const { id, username, city, country, street, village, mobile } = query || ruleForm
     this.ruleForm = {
       id,
       username,

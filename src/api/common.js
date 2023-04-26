@@ -55,6 +55,54 @@ export const CommonApi = {
       method: 'delete'
     })
   },
+  getGyList(params) {
+    return request({
+      url: `/template-api/public-allowance/search`,
+      method: 'get',
+      params
+    })
+  },
+  getGyDiff(params) {
+    return request({
+      url: `/template-api/public-allowance/diff`,
+      method: 'get',
+      params
+    })
+  },
+  getCillageGyDiff(params) {
+    return request({
+      url: `/template-api/public-allowance/selectDiff`,
+      method: 'get',
+      params
+    })
+  },
+  saveGyInfo(params) {
+    return request({
+      url: `/template-api/public-allowance`,
+      method: 'post',
+      params
+    })
+  },
+  uploadGyInfo(params) {
+    return request({
+      url: `/template-api/public-allowance/upload`,
+      method: 'post',
+      params
+    })
+  },
+  delGyInfo(id) {
+    return request({
+      url: `/template-api/public-allowance/${id}`,
+      method: 'delete'
+    })
+  },
+  updateGyInfo(params) {
+    return request({
+      url: `/template-api/public-allowance`,
+      method: 'put',
+      params
+    })
+  },
   // 乡村信息查询
   getCountryInfo(params) {
     return request({

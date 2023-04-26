@@ -37,7 +37,7 @@
           <el-input v-model="ruleForm.bankCode" />
         </el-form-item>
         <el-form-item>
-          <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">修改</el-button>
+          <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('ruleForm')">取消</el-button>
         </el-form-item>
       </el-form>
@@ -49,7 +49,6 @@ import { CommonApi } from '@/api'
 
 const ruleForm = {
   code: '',
-  id: '',
   name: '',
   phone: '',
   idcard: '',
@@ -60,12 +59,12 @@ const ruleForm = {
   bankCode: ''
 }
 
-// const provinceCode = 430000
+const provinceCode = 430000
 
-// async function getAreaList(pcode = 100000) {
-//   const { body, code } = await CommonApi.getAreaList(pcode)
-//   return code === 0 ? body : []
-// }
+async function getAreaList(pcode = 100000) {
+  const { body, code } = await CommonApi.getAreaList(pcode)
+  return code === 0 ? body : []
+}
 
 export default {
   data() {
@@ -102,28 +101,11 @@ export default {
       loading: false
     }
   },
-  created() {
-    const {
-      query: { code, id, name, phone, idcard, homeNo, familyAddress, familyMember, bankName, bankCode }
-    } = this.$route
-    this.ruleForm = {
-      code,
-      id,
-      name,
-      phone,
-      idcard,
-      homeNo,
-      familyAddress,
-      familyMember,
-      bankName,
-      bankCode
-    }
-  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.updateBaseInfo()
+          this.addUserBaseInfo()
         } else {
           console.log('error submit!!')
           return false
@@ -134,7 +116,7 @@ export default {
       this.$refs.ruleForm.resetFields()
       this.$router.go(-1)
     },
-    async updateBaseInfo() {
+    async addUserBaseInfo() {
       if (this.loading) return
       this.loading = true
       // const { body } = await CommonApi.getAreaByCode(streetCode)
@@ -144,17 +126,17 @@ export default {
       }
       delete params.region
 
-      const { code } = await CommonApi.updateUserBaseInfo(params)
+      const { code } = await CommonApi.addUserBaseInfo(params)
       if (code === 0) {
-        this.$message.success('修改成功！')
+        this.$message.success('添加成功！')
         this.$router.go(-1)
       } else {
-        this.$message.error('修改失败！')
+        this.$message.error('添加失败！')
       }
       this.loading = false
     }
   }
 }
 </script>
-  <style lang="scss" scoped></style>
+<style lang="scss" scoped></style>
 

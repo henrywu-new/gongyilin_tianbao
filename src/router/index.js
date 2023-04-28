@@ -66,14 +66,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user',
     name: 'user',
-    meta: { roles: ['admin'] },
+    meta: { roles: ['admin'], icon: 'el-icon-user-solid' },
     children: [
       {
         path: '/user',
         meta: {
           title: '用户管理',
-          roles: ['admin'],
-          icon: 'el-icon-user-solid'
+          roles: ['admin']
         },
         component: () => import('@/views/user/index')
       },
@@ -104,14 +103,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user/baseinfo',
     name: 'userBase',
-    meta: { roles: ['admin'] },
+    meta: { roles: ['admin'], icon: 'el-icon-user-solid' },
     children: [
       {
         path: '/user/baseinfo',
         meta: {
           title: '用户基础数据',
-          roles: ['admin'],
-          icon: 'el-icon-user-solid'
+          roles: ['admin']
         },
         component: () => import('@/views/baseinfo/index')
       },
@@ -119,8 +117,7 @@ export const constantRoutes = [
         path: '/user/baseinfo/add',
         meta: {
           title: '添加用户基础数据',
-          roles: ['admin'],
-          icon: 'el-icon-user-solid'
+          roles: ['admin']
         },
         component: () => import('@/views/baseinfo/add'),
         hidden: true
@@ -130,8 +127,7 @@ export const constantRoutes = [
         name: 'baseinfEdit',
         meta: {
           title: '修改用户基础数据',
-          roles: ['admin'],
-          icon: 'el-icon-user-solid'
+          roles: ['admin']
         },
         component: () => import('@/views/baseinfo/edit'),
         hidden: true
@@ -142,26 +138,26 @@ export const constantRoutes = [
     path: '/baseconfig',
     component: Layout,
     redirect: '/baseconfig',
-    meta: { roles: ['admin'] },
+    meta: { roles: ['admin'], icon: 'el-icon-user-solid' },
     children: [
       {
         path: '/baseconfig',
         name: 'baseconfig',
         component: () => import('@/views/baseconfig'),
-        meta: { title: '配置基本数据', roles: ['admin'], icon: 'el-icon-setting' }
+        meta: { title: '配置基本数据', roles: ['admin'] }
       },
       {
         path: '/baseconfigg/add',
         name: 'baseconfigAdd',
         component: () => import('@/views/baseconfig/add'),
-        meta: { title: '添加基本数据', roles: ['admin'], icon: 'el-icon-s-platform' },
+        meta: { title: '添加基本数据', roles: ['admin'] },
         hidden: true
       },
       {
         path: '/baseconfigg/edit',
         name: 'baseconfigEdit',
         component: () => import('@/views/baseconfig/edit'),
-        meta: { title: '修改基本数据', roles: ['admin'], icon: 'el-icon-s-platform' },
+        meta: { title: '修改基本数据', roles: ['admin'] },
         hidden: true
       }
     ]
@@ -170,26 +166,26 @@ export const constantRoutes = [
     path: '/village',
     component: Layout,
     redirect: '/village',
-    meta: { roles: ['admin'] },
+    meta: { roles: ['admin'], icon: 'el-icon-user-solid' },
     children: [
       {
         path: '/village',
         name: 'village',
         component: () => import('@/views/village'),
-        meta: { title: '村庄信息', roles: ['admin'], icon: 'el-icon-s-shop' }
+        meta: { title: '村庄信息', roles: ['admin'] }
       },
       {
         path: '/village/add',
         name: 'villageAdd',
         component: () => import('@/views/village/add'),
-        meta: { title: '添加村庄', roles: ['admin'], icon: 'el-icon-s-platform' },
+        meta: { title: '添加村庄', roles: ['admin'] },
         hidden: true
       },
       {
         path: '/village/edit',
         name: 'villageEdit',
         component: () => import('@/views/village/edit'),
-        meta: { title: '添加村庄', roles: ['admin'], icon: 'el-icon-s-platform' },
+        meta: { title: '添加村庄', roles: ['admin'] },
         hidden: true
       }
     ]
@@ -198,21 +194,66 @@ export const constantRoutes = [
     path: '/gongyilin',
     component: Layout,
     redirect: '/gongyilin',
-    meta: { roles: ['admin'] },
+    meta: { title: '公益林', roles: ['admin'], icon: 'el-icon-s-shop' },
     children: [
       {
         path: '/gongyilin',
         name: 'gongyilin',
         component: () => import('@/views/gongyilin'),
-        meta: { title: '公益林', roles: ['admin'], icon: 'el-icon-s-shop' }
+        meta: { title: '公益林', roles: ['admin'] }
+      },
+      {
+        path: '/gongyilin/add',
+        name: 'gongyilinAdd',
+        component: () => import('@/views/gongyilin/add'),
+        meta: { title: '添加', roles: ['admin'] },
+        hidden: true
+      },
+      {
+        path: '/gongyilin/diff',
+        name: 'gongyilinDiff',
+        component: () => import('@/views/gongyilin/diff'),
+        meta: { title: '公益林相差', roles: ['admin'] }
+      },
+      {
+        path: '/gongyilin/diff-village',
+        name: 'gongyilinDiffVillage',
+        component: () => import('@/views/gongyilin/diff-village'),
+        meta: { title: '乡村公益林相差', roles: ['admin'] }
       }
-      //   {
-      //     path: '/village/add',
-      //     name: 'villageAdd',
-      //     component: () => import('@/views/village/add'),
-      //     meta: { title: '添加村庄', roles: ['admin'], icon: 'el-icon-s-platform' },
-      //     hidden: true
-      //   },
+    ]
+  },
+  {
+    path: '/tianbao',
+    component: Layout,
+    redirect: '/tianbao',
+    meta: { title: '天保', roles: ['admin'], icon: 'el-icon-s-shop' },
+    children: [
+      {
+        path: '/tianbao',
+        name: 'tianbao',
+        component: () => import('@/views/tianbao'),
+        meta: { title: '公益林', roles: ['admin'] }
+      },
+      {
+        path: '/tianbao/add',
+        name: 'tianbaoAdd',
+        component: () => import('@/views/tianbao/add'),
+        meta: { title: '添加', roles: ['admin'] },
+        hidden: true
+      },
+      {
+        path: '/tianbao/diff',
+        name: 'gongyilinDiff',
+        component: () => import('@/views/tianbao/diff'),
+        meta: { title: '天保相差', roles: ['admin'] }
+      },
+      {
+        path: '/tianbao/diff-village',
+        name: 'tianbaoDiffVillage',
+        component: () => import('@/views/tianbao/diff-village'),
+        meta: { title: '乡村天保相差', roles: ['admin'] }
+      }
     ]
   },
   // 404 page must be placed at the end !!!

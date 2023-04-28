@@ -59,7 +59,7 @@
         </el-table-column>
         <el-table-column prop="street" label="乡镇" width="180" />
         <el-table-column prop="village" label="村落" />
-        <el-table-column fixed="right" label="操作" min-width="200">
+        <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
             <el-button style="margin-right: 10px" type="primary" plain @click="handleEdit(scope.row)"> 修改 </el-button>
             <el-popconfirm

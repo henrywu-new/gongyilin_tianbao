@@ -69,7 +69,7 @@ export const CommonApi = {
       params
     })
   },
-  getCillageGyDiff(params) {
+  getVillageGyDiff(params) {
     return request({
       url: `/template-api/public-allowance/selectDiff`,
       method: 'get',

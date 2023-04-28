@@ -10,10 +10,14 @@
         class="dialog-form"
       >
         <el-form-item label="村名" prop="area">
-          <el-input v-model="ruleForm.name" placeholder="村名" />
+          <div class="dynamic-input-wrap">
+            <div v-for="(item, index) in ruleForm.names" :key="item.id">
+              <el-input v-model="item.name" placeholder="村名" />
+            </div>
+          </div>
         </el-form-item>
         <el-form-item>
-          <el-button :loading="loading" type="primary" @click="validateForm('ruleForm')">添加</el-button>
+          <el-button :loading="loading" type="primary" @click="validateForm('ruleForm')">修改</el-button>
           <el-button @click="resetForm('ruleForm')">取消</el-button>
         </el-form-item>
       </el-form>
@@ -24,7 +28,7 @@
 import { CommonApi } from '@/api'
 
 const ruleForm = {
-  names: [{ id: Date.now(), value: '' }]
+  names: [{ id: Date.now(), name: '' }]
 }
 
 export default {
@@ -47,11 +51,20 @@ export default {
     }
   },
   created() {
-    const { query } = this.$route
-    const { id, name } = query || ruleForm
-    this.ruleForm = { id, name }
+    this.getList()
   },
   methods: {
+    async getList() {
+      if (this.loading) return
+
+      const params = { page: 1, size: 1000 }
+      this.loading = true
+      const { body, code } = await CommonApi.getCountryInfo(params)
+      this.loading = false
+      if (code !== 0) return
+      this.ruleForm.names = body.list
+      this.total = body.total
+    },
     validateForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -70,7 +83,9 @@ export default {
       if (this.loading) return
       this.loading = true
 
-      const params = { names: [this.ruleForm.name] }
+      const names = this.ruleForm.names.map((item) => item.name)
+
+      const params = { names }
 
       const { code } = await CommonApi.updateCountryInfo(params)
       if (code === 0) {

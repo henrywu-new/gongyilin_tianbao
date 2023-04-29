@@ -22,6 +22,9 @@
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
         <div style="display: flex; gap: 10px">
           <el-button type="primary" @click="() => $router.push('/gongyilin/add')">添加</el-button>
+          <el-upload action="" :before-upload="beforeUpload" :show-file-list="false" :http-request="handleUpload">
+            <el-button type="primary">导入数据</el-button>
+          </el-upload>
         </div>
       </div>
       <el-table v-loading="loading" :data="list" style="width: 100%">
@@ -112,6 +115,14 @@ export default {
       this.list = body.list
       this.total = body.total
     },
+    beforeUpload() {},
+    async handleUpload({ file }) {
+      const formData = new FormData()
+      formData.append('file', file)
+      await CommonApi.uploadGyInfo(formData)
+      this.$message.success('导入数据成功！')
+      this.getList()
+    },
     onSearch() {
       this.page = 1
       this.getList()
@@ -135,7 +146,7 @@ export default {
 
       this.loading3 = true
       this.selectId = id
-      const { code } = await CommonApi.delBaseInfoById(id)
+      const { code } = await CommonApi.delGyInfo(id)
       if (code === 0) {
         this.$message.success('删除成功！')
         this.getList()

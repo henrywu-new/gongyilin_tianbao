@@ -191,7 +191,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/gongyilin',
+    path: '/gyl',
     component: Layout,
     redirect: '/gongyilin',
     meta: { title: '公益林', roles: ['admin'], icon: 'el-icon-s-shop' },
@@ -200,13 +200,20 @@ export const constantRoutes = [
         path: '/gongyilin',
         name: 'gongyilin',
         component: () => import('@/views/gongyilin'),
-        meta: { title: '公益林', roles: ['admin'] }
+        meta: { title: '数据管理', roles: ['admin'] }
       },
       {
         path: '/gongyilin/add',
         name: 'gongyilinAdd',
         component: () => import('@/views/gongyilin/add'),
         meta: { title: '添加', roles: ['admin'] },
+        hidden: true
+      },
+      {
+        path: '/gongyilin/edit',
+        name: 'gongyilinEdit',
+        component: () => import('@/views/gongyilin/edit'),
+        meta: { title: '修改', roles: ['admin'] },
         hidden: true
       },
       {
@@ -224,7 +231,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/tianbao',
+    path: '/tb',
     component: Layout,
     redirect: '/tianbao',
     meta: { title: '天保', roles: ['admin'], icon: 'el-icon-s-shop' },
@@ -233,7 +240,7 @@ export const constantRoutes = [
         path: '/tianbao',
         name: 'tianbao',
         component: () => import('@/views/tianbao'),
-        meta: { title: '公益林', roles: ['admin'] }
+        meta: { title: '数据管理', roles: ['admin'] }
       },
       {
         path: '/tianbao/add',

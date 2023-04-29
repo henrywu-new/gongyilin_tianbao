@@ -129,7 +129,7 @@ export default {
         ...this.ruleForm
       }
 
-      const { code } = await CommonApi.saveGyInfo(params)
+      const { code } = await CommonApi.updateGyInfo(params)
       if (code === 0) {
         this.$message.success('添加成功！')
         this.$router.go(-1)
@@ -141,5 +141,5 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped></style>
+  <style lang="scss" scoped></style>
 

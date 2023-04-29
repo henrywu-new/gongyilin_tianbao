@@ -35,7 +35,6 @@
             <el-button type="primary">导入用户基础数据</el-button>
           </el-upload>
         </div>
-        <el-button type="primary" plain>{{ `总人数：${total}` }}</el-button>
       </div>
       <el-table v-loading="loading" :data="userList" style="width: 100%">
         <el-table-column prop="createDate" label="添加日期" width="140">
@@ -76,7 +75,7 @@
       <div style="display: flex; justify-content: flex-end; margin-top: 20px">
         <el-pagination
           background
-          layout="prev, pager, next"
+          layout="total, prev, pager, next"
           :total="total"
           :page-size="size"
           @current-change="onPageChange"

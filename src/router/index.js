@@ -250,8 +250,15 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: '/tianbao/edit',
+        name: 'tianbaoEdit',
+        component: () => import('@/views/tianbao/edit'),
+        meta: { title: '修改', roles: ['admin'] },
+        hidden: true
+      },
+      {
         path: '/tianbao/diff',
-        name: 'gongyilinDiff',
+        name: 'tianbaoDiff',
         component: () => import('@/views/tianbao/diff'),
         meta: { title: '天保相差', roles: ['admin'] }
       },

@@ -9,6 +9,11 @@
         style="margin-top: 40px"
         class="dialog-form"
       >
+        <el-form-item label="选择用户" prop="id">
+          <el-select v-model="value" placeholder="请选择用户" @change="onChange">
+            <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="对象代码" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
@@ -33,11 +38,20 @@
         <el-form-item label="银行名称" prop="bankName">
           <el-input v-model="ruleForm.bankName" />
         </el-form-item>
+        <el-form-item label="银行账号" prop="account">
+          <el-input v-model="ruleForm.account" disabled />
+        </el-form-item>
         <el-form-item label="银行代码" prop="bankCode">
           <el-input v-model="ruleForm.bankCode" />
         </el-form-item>
+        <el-form-item label="补助面积" prop="policyUnit">
+          <el-input v-model="ruleForm.policyUnit" />
+        </el-form-item>
+        <el-form-item label="补助数量" prop="policyUnit">
+          <el-input v-model="ruleForm.number" />
+        </el-form-item>
         <el-form-item>
-          <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">提交</el-button>
+          <el-button :loading="loading" type="primary" @click="validateForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('ruleForm')">取消</el-button>
         </el-form-item>
       </el-form>
@@ -52,11 +66,14 @@ const ruleForm = {
   name: '',
   phone: '',
   idcard: '',
+  account: '',
   homeNo: '',
   familyAddress: '',
   familyMember: '',
   bankName: '',
-  bankCode: ''
+  bankCode: '',
+  policyUnit: '',
+  number: ''
 }
 
 const provinceCode = 430000
@@ -98,14 +115,36 @@ export default {
         // region: [{ required: true, message: '请选择地区', trigger: 'change' }],
         // status: [{ required: true, message: '请选择状态', trigger: 'change' }]
       },
-      loading: false
+      loading: false,
+      options: []
     }
   },
+  created() {
+    this.getUsers()
+  },
   methods: {
-    submitForm(formName) {
+    async getUsers() {
+      const params = { page: 1, size: 1000 }
+      const { body, code } = await CommonApi.getUserList(params)
+      if (code !== 0) return
+      this.$set(this, 'options', body.list)
+    },
+    onChange() {
+      const target = this.options.find((item) => item.id == this.value)
+      if (target) {
+        Object.keys(this.ruleForm).forEach((key) => {
+          if (key === 'account') {
+            this.ruleForm['account'] = target['bankAccount'] || ''
+          } else {
+            this.ruleForm[key] = target[key] || ''
+          }
+        })
+      }
+    },
+    validateForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.addUserBaseInfo()
+          this.submitForm()
         } else {
           console.log('error submit!!')
           return false
@@ -116,7 +155,7 @@ export default {
       this.$refs.ruleForm.resetFields()
       this.$router.go(-1)
     },
-    async addUserBaseInfo() {
+    async submitForm() {
       if (this.loading) return
       this.loading = true
       // const { body } = await CommonApi.getAreaByCode(streetCode)
@@ -126,7 +165,7 @@ export default {
       }
       delete params.region
 
-      const { code } = await CommonApi.addUserBaseInfo(params)
+      const { code } = await CommonApi.saveTbInfo(params)
       if (code === 0) {
         this.$message.success('添加成功！')
         this.$router.go(-1)

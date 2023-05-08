@@ -129,7 +129,6 @@ export default {
   },
   methods: {
     async getUsers() {
-      if (this.loading) return
       const params = { page: 1, size: 500 }
       this.loading = true
       const { body, code } = await CommonApi.getAccountList(params)
@@ -138,8 +137,6 @@ export default {
       this.userList = body.list
     },
     async getVillageList() {
-      if (this.loading) return
-
       const params = { page: 1, size: 500 }
       this.loading = true
       const { body, code } = await CommonApi.getCountryInfo(params)

@@ -120,7 +120,7 @@ export default {
         ...this.ruleForm
       }
 
-      const { code } = await CommonApi.updateGyInfo(params)
+      const { code } = await CommonApi.updateTbInfo(params)
       if (code === 0) {
         this.$message.success('修改成功！')
         this.$router.go(-1)

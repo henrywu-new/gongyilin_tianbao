@@ -35,9 +35,13 @@
             <span> {{ scope.row.updateDate || '---' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="id" label="ID" width="160" />
-        <el-table-column prop="name" label="村名" width="200" />
-        <el-table-column prop="creator" label="创建者" />
+        <el-table-column prop="name" label="用户名" width="100" />
+        <el-table-column prop="idcard" label="身份证号" width="160" />
+        <el-table-column prop="phone" label="手机号码" width="120" />
+        <el-table-column prop="account" label="银行账号" width="200" />
+        <el-table-column prop="familyAddress" label="村名" width="200" />
+        <el-table-column prop="policyUnit" label="补助面积" width="100" />
+        <el-table-column prop="number" label="补助数量" />
         <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
             <el-button style="margin-right: 10px" type="primary" plain @click="handleEdit(scope.row)"> 修改 </el-button>
@@ -106,7 +110,7 @@ export default {
 
       const params = { startTime, endTime, page, size }
       this.loading = true
-      const { body, code } = await CommonApi.getGyList(params)
+      const { body, code } = await CommonApi.getTbList(params)
       this.loading = false
       if (code !== 0) return
       this.list = body.list
@@ -135,7 +139,7 @@ export default {
 
       this.loading3 = true
       this.selectId = id
-      const { code } = await CommonApi.delBaseInfoById(id)
+      const { code } = await CommonApi.delTbData(id)
       if (code === 0) {
         this.$message.success('删除成功！')
         this.getList()
@@ -145,12 +149,11 @@ export default {
       this.loading3 = false
     },
     handleEdit(data) {
-      this.$router.push({ name: 'villageEdit', query: { ...data }})
+      this.$router.push({ name: 'tianbaoEdit', query: { ...data }})
     }
   }
 }
 </script>
-
-        <style lang="scss" scoped>
+<style lang="scss" scoped>
 </style>
 

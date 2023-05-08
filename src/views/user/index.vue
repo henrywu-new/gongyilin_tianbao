@@ -177,7 +177,7 @@ export default {
       this.loading3 = false
     },
     handleEdit(userinfo) {
-      this.$router.push({ name: 'userEdit', query: { ...userinfo }})
+      this.$router.push({ name: 'tianbaoDiff', query: { ...userinfo }})
     }
   }
 }

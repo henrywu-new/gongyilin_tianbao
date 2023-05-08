@@ -25,7 +25,9 @@
           <el-input v-model="ruleForm.password" />
         </el-form-item>
         <el-form-item label="村庄" prop="village">
-          <el-input v-model="ruleForm.village" />
+          <el-select v-model="ruleForm.village" placeholder="请选择">
+            <el-option v-for="item in villageList" :key="item.id" :label="item.name" :value="item.name" />
+          </el-select>
         </el-form-item>
         <!-- <el-form-item label="状态" prop="status">
           <el-radio-group v-model="ruleForm.status">
@@ -93,10 +95,20 @@ export default {
         // region: [{ required: true, message: '请选择地区', trigger: 'change' }],
         // status: [{ required: true, message: '请选择状态', trigger: 'change' }]
       },
-      loading: false
+      loading: false,
+      villageList: []
     }
   },
+  created() {
+    this.getVillageList()
+  },
   methods: {
+    async getVillageList() {
+      const params = { page: 1, size: 500 }
+      const { body, code } = await CommonApi.getCountryInfo(params)
+      if (code !== 0) return
+      this.villageList = body.list
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

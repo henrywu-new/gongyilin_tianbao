@@ -45,8 +45,8 @@
             <span> {{ scope.row.updateDate || '---' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="area" label="补助面积（单位亩）" width="140" />
-        <el-table-column prop="areaUnit" label="补助标准单位（元/亩）" width="160" />
+        <el-table-column prop="area" label="补助面积" width="140" />
+        <el-table-column prop="areaUnit" label="补助标准单位" width="160" />
         <el-table-column prop="operateType" label="操作类型" width="120">
           <template slot-scope="scope">
             <span> {{ fmtValue(options2, scope.row.operateType) || '---' }}</span>

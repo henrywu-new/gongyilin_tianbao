@@ -76,18 +76,18 @@ export const CommonApi = {
       params
     })
   },
-  saveGyInfo(params) {
+  saveGyInfo(data) {
     return request({
       url: `/template-api/public-allowance`,
       method: 'post',
-      params
+      data
     })
   },
-  uploadGyInfo(params) {
+  uploadGyInfo(data) {
     return request({
       url: `/template-api/public-allowance/upload`,
       method: 'post',
-      params
+      data
     })
   },
   delGyInfo(id) {

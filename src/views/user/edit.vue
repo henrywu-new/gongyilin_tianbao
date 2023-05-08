@@ -25,7 +25,9 @@
           <el-input v-model="ruleForm.password" />
         </el-form-item>
         <el-form-item label="村庄" prop="village">
-          <el-input v-model="ruleForm.village" />
+          <el-select v-model="ruleForm.village" placeholder="请选择">
+            <el-option v-for="item in villageList" :key="item.id" :label="item.name" :value="item.name" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -102,8 +104,15 @@ export default {
       password: '',
       village
     }
+    this.getVillageList()
   },
   methods: {
+    async getVillageList() {
+      const params = { page: 1, size: 500 }
+      const { body, code } = await CommonApi.getCountryInfo(params)
+      if (code !== 0) return
+      this.villageList = body.list
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

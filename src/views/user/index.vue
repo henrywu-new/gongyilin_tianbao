@@ -19,7 +19,7 @@
     </el-card>
     <el-card class="box-card" style="margin-top: 24px">
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
-        <el-button type="primary" @click="() => $router.push('/user/add')">添加管理员</el-button>
+        <el-button type="primary" @click="() => $router.push('/user/add')">添加用户</el-button>
       </div>
       <el-table v-loading="loading" :data="userList" style="width: 100%">
         <el-table-column prop="createDate" label="添加日期" width="140">

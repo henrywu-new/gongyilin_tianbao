@@ -38,11 +38,17 @@
         <el-form-item label="银行名称" prop="bankName">
           <el-input v-model="ruleForm.bankName" disabled />
         </el-form-item>
+        <el-form-item label="银行账号" prop="account">
+          <el-input v-model="ruleForm.account" disabled />
+        </el-form-item>
         <el-form-item label="银行代码" prop="bankCode">
           <el-input v-model="ruleForm.bankCode" disabled />
         </el-form-item>
         <el-form-item label="补助面积" prop="policyUnit">
           <el-input v-model="ruleForm.policyUnit" />
+        </el-form-item>
+        <el-form-item label="补助数量" prop="policyUnit">
+          <el-input v-model="ruleForm.number" />
         </el-form-item>
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="validateForm('ruleForm')">添加</el-button>
@@ -66,7 +72,9 @@ const ruleForm = {
   familyMember: '',
   bankName: '',
   bankCode: '',
-  policyUnit: ''
+  policyUnit: '',
+  number: '',
+  account: ''
 }
 
 export default {
@@ -102,7 +110,11 @@ export default {
       const target = this.options.find((item) => item.id == this.value)
       if (target) {
         Object.keys(this.ruleForm).forEach((key) => {
-          this.ruleForm[key] = target[key] || ''
+          if (key === 'account') {
+            this.ruleForm['account'] = target['bankAccount'] || ''
+          } else {
+            this.ruleForm[key] = target[key] || ''
+          }
         })
       }
     },
@@ -128,6 +140,7 @@ export default {
       const params = {
         ...this.ruleForm
       }
+      delete params.id
 
       const { code } = await CommonApi.saveGyInfo(params)
       if (code === 0) {
@@ -142,4 +155,3 @@ export default {
 }
 </script>
 <style lang="scss" scoped></style>
-

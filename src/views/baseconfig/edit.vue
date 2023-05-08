@@ -15,8 +15,10 @@
         <el-form-item label="补助标准单位" prop="areaUnit">
           <el-input v-model="ruleForm.areaUnit" placeholder="元/亩" />
         </el-form-item>
-        <el-form-item label="村落" prop="areaUnit">
-          <el-input v-model="ruleForm.village" placeholder="村落" />
+        <el-form-item label="村落" prop="village">
+          <el-select v-model="ruleForm.village" placeholder="请选择">
+            <el-option v-for="item in villageList" :key="item.id" :label="item.name" :value="item.name" />
+          </el-select>
         </el-form-item>
         <el-form-item label="权属">
           <el-select v-model="ruleForm.ownership" placeholder="请选择">
@@ -94,7 +96,8 @@ export default {
           label: '天保',
           value: 1
         }
-      ]
+      ],
+      villageList: []
     }
   },
   created() {
@@ -109,8 +112,19 @@ export default {
       ownership,
       village
     }
+    this.getVillageList()
   },
   methods: {
+    async getVillageList() {
+      if (this.loading) return
+
+      const params = { page: 1, size: 500 }
+      this.loading = true
+      const { body, code } = await CommonApi.getCountryInfo(params)
+      this.loading = false
+      if (code !== 0) return
+      this.villageList = body.list
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

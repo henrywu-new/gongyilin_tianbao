@@ -19,6 +19,24 @@
       </el-form>
     </el-card>
     <el-card class="box-card" style="margin-top: 24px">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="相差" name="first">
+          <div class="text item">allocate: {{ diffData.allocate }}</div>
+          <div class="text item">diff: {{ diffData.diff }}</div>
+          <div class="text item">street: {{ diffData.street }}</div>
+          <div class="text item">total: {{ diffData.total }}</div>
+          <div class="text item">village: {{ diffData.village }}</div>
+        </el-tab-pane>
+        <el-tab-pane label="乡村相差" name="second">
+          <div class="text item">allocate: {{ villageDiffData.allocate }}</div>
+          <div class="text item">diff: {{ villageDiffData.diff }}</div>
+          <div class="text item">street: {{ villageDiffData.street }}</div>
+          <div class="text item">total: {{ villageDiffData.total }}</div>
+          <div class="text item">village: {{ villageDiffData.village }}</div>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
+    <el-card class="box-card" style="margin-top: 24px">
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
         <div style="display: flex; gap: 10px">
           <el-button type="primary" @click="() => $router.push('/gongyilin/add')">添加</el-button>
@@ -95,7 +113,22 @@ export default {
         operateType: '',
         date: []
       },
-      value: ''
+      value: '',
+      activeName: 'first',
+      diffData: {
+        allocate: 0,
+        diff: 0,
+        street: '',
+        total: 0,
+        village: ''
+      },
+      villageDiffData: {
+        allocate: 0,
+        diff: 0,
+        street: '',
+        total: 0,
+        village: ''
+      }
     }
   },
   mounted() {
@@ -113,11 +146,25 @@ export default {
 
       const params = { startTime, endTime, page, size }
       this.loading = true
-      const { body, code } = await CommonApi.getGyList(params)
-      this.loading = false
+      try {
+        const { body, code } = await CommonApi.getGyList(params)
+        this.loading = false
+        if (code !== 0) return
+        this.list = body.list
+        this.total = body.total
+      } catch {
+        this.loading = false
+      }
+    },
+    async getVillageGyDiff() {
+      const { body, code } = await CommonApi.getVillageGyDiff()
       if (code !== 0) return
-      this.list = body.list
-      this.total = body.total
+      this.villageDiffData = body
+    },
+    async getGyDiff() {
+      const { body, code } = await CommonApi.getGyDiff()
+      if (code !== 0) return
+      this.diffData = body
     },
     beforeUpload() {},
     async handleUpload({ file }) {

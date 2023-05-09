@@ -200,7 +200,7 @@ export const constantRoutes = [
         path: '/gongyilin',
         name: 'gongyilin',
         component: () => import('@/views/gongyilin'),
-        meta: { title: '数据管理', roles: ['admin'] }
+        meta: { title: '公益林', roles: ['admin'] }
       },
       {
         path: '/gongyilin/add',
@@ -215,19 +215,19 @@ export const constantRoutes = [
         component: () => import('@/views/gongyilin/edit'),
         meta: { title: '修改', roles: ['admin'] },
         hidden: true
-      },
-      {
-        path: '/gongyilin/diff',
-        name: 'gongyilinDiff',
-        component: () => import('@/views/gongyilin/diff'),
-        meta: { title: '公益林相差', roles: ['admin'] }
-      },
-      {
-        path: '/gongyilin/diff-village',
-        name: 'gongyilinDiffVillage',
-        component: () => import('@/views/gongyilin/diff-village'),
-        meta: { title: '乡村公益林相差', roles: ['admin'] }
       }
+      // {
+      //   path: '/gongyilin/diff',
+      //   name: 'gongyilinDiff',
+      //   component: () => import('@/views/gongyilin/diff'),
+      //   meta: { title: '公益林相差', roles: ['admin'] }
+      // },
+      // {
+      //   path: '/gongyilin/diff-village',
+      //   name: 'gongyilinDiffVillage',
+      //   component: () => import('@/views/gongyilin/diff-village'),
+      //   meta: { title: '乡村公益林相差', roles: ['admin'] }
+      // }
     ]
   },
   {
@@ -240,7 +240,7 @@ export const constantRoutes = [
         path: '/tianbao',
         name: 'tianbao',
         component: () => import('@/views/tianbao'),
-        meta: { title: '数据管理', roles: ['admin'] }
+        meta: { title: '天保', roles: ['admin'] }
       },
       {
         path: '/tianbao/add',
@@ -255,19 +255,19 @@ export const constantRoutes = [
         component: () => import('@/views/tianbao/edit'),
         meta: { title: '修改', roles: ['admin'] },
         hidden: true
-      },
-      {
-        path: '/tianbao/diff',
-        name: 'tianbaoDiff',
-        component: () => import('@/views/tianbao/diff'),
-        meta: { title: '天保相差', roles: ['admin'] }
-      },
-      {
-        path: '/tianbao/diff-village',
-        name: 'tianbaoDiffVillage',
-        component: () => import('@/views/tianbao/diff-village'),
-        meta: { title: '乡村天保相差', roles: ['admin'] }
       }
+      // {
+      //   path: '/tianbao/diff',
+      //   name: 'tianbaoDiff',
+      //   component: () => import('@/views/tianbao/diff'),
+      //   meta: { title: '天保相差', roles: ['admin'] }
+      // },
+      // {
+      //   path: '/tianbao/diff-village',
+      //   name: 'tianbaoDiffVillage',
+      //   component: () => import('@/views/tianbao/diff-village'),
+      //   meta: { title: '乡村天保相差', roles: ['admin'] }
+      // }
     ]
   },
   // 404 page must be placed at the end !!!

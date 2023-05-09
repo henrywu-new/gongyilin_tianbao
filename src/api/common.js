@@ -33,7 +33,7 @@ export const CommonApi = {
     })
   },
   // 乡村天保相差
-  getCountryTbDiff(params) {
+  getVillageTbDiff(params) {
     return request({
       url: `/template-api/tempearl-allowance/selectDiff`,
       method: 'get',

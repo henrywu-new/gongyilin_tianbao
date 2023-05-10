@@ -4,7 +4,7 @@ export const CommonApi = {
   // 保存天保信息
   saveTbInfo: (data) => {
     return request({
-      url: `/template-api/tempearl-allowance`,
+      url: `/forest-api/tempearl-allowance`,
       method: 'post',
       data
     })
@@ -12,7 +12,7 @@ export const CommonApi = {
   // 更新天保信息
   updateTbInfo: (data) => {
     return request({
-      url: `/template-api/tempearl-allowance`,
+      url: `/forest-api/tempearl-allowance`,
       method: 'put',
       data
     })
@@ -20,14 +20,14 @@ export const CommonApi = {
   // 天保相差
   getTbDiff: () => {
     return request({
-      url: `/template-api/tempearl-allowance/diff`,
+      url: `/forest-api/tempearl-allowance/diff`,
       method: 'get'
     })
   },
   // 天保查询
   getTbList(params) {
     return request({
-      url: `/template-api/tempearl-allowance/search`,
+      url: `/forest-api/tempearl-allowance/search`,
       method: 'get',
       params
     })
@@ -35,7 +35,7 @@ export const CommonApi = {
   // 乡村天保相差
   getVillageTbDiff(params) {
     return request({
-      url: `/template-api/tempearl-allowance/selectDiff`,
+      url: `/forest-api/tempearl-allowance/selectDiff`,
       method: 'get',
       params
     })
@@ -43,7 +43,7 @@ export const CommonApi = {
   // 导入天保上一年度数据
   uploadLastYearData(data) {
     return request({
-      url: `/template-api/tempearl-allowance/upload`,
+      url: `/forest-api/tempearl-allowance/upload`,
       method: 'post',
       data
     })
@@ -51,54 +51,54 @@ export const CommonApi = {
   // 删除天保数据
   delTbData(id) {
     return request({
-      url: `/template-api/tempearl-allowance/${id}`,
+      url: `/forest-api/tempearl-allowance/${id}`,
       method: 'delete'
     })
   },
   getGyList(params) {
     return request({
-      url: `/template-api/public-allowance/search`,
+      url: `/forest-api/public-allowance/search`,
       method: 'get',
       params
     })
   },
   getGyDiff(params) {
     return request({
-      url: `/template-api/public-allowance/diff`,
+      url: `/forest-api/public-allowance/diff`,
       method: 'get',
       params
     })
   },
   getVillageGyDiff(params) {
     return request({
-      url: `/template-api/public-allowance/selectDiff`,
+      url: `/forest-api/public-allowance/selectDiff`,
       method: 'get',
       params
     })
   },
   saveGyInfo(data) {
     return request({
-      url: `/template-api/public-allowance`,
+      url: `/forest-api/public-allowance`,
       method: 'post',
       data
     })
   },
   uploadGyInfo(data) {
     return request({
-      url: `/template-api/public-allowance/upload`,
+      url: `/forest-api/public-allowance/upload`,
       method: 'post',
       data
     })
   },
   delGyInfo(id) {
     return request({
-      url: `/template-api/public-allowance/${id}`,
+      url: `/forest-api/public-allowance/${id}`,
       method: 'delete'
     })
   },
   updateGyInfo(params) {
     return request({
-      url: `/template-api/public-allowance`,
+      url: `/forest-api/public-allowance`,
       method: 'put',
       params
     })
@@ -106,7 +106,7 @@ export const CommonApi = {
   // 乡村信息查询
   getCountryInfo(params) {
     return request({
-      url: `/template-api/area-village`,
+      url: `/forest-api/area-village`,
       method: 'get',
       params
     })
@@ -114,7 +114,7 @@ export const CommonApi = {
   // 保存乡村信息
   saveCountryInfo(data) {
     return request({
-      url: `/template-api/area-village`,
+      url: `/forest-api/area-village`,
       method: 'post',
       data
     })
@@ -122,7 +122,7 @@ export const CommonApi = {
   // 更新乡村信息
   updateCountryInfo(data) {
     return request({
-      url: `/template-api/area-village`,
+      url: `/forest-api/area-village`,
       method: 'put',
       data
     })
@@ -130,7 +130,7 @@ export const CommonApi = {
   // 新增用户基础数据
   addUserBaseInfo(data) {
     return request({
-      url: `/template-api/base-userinfo`,
+      url: `/forest-api/base-userinfo`,
       method: 'post',
       data
     })
@@ -138,7 +138,7 @@ export const CommonApi = {
   // 更新用户基础数据
   updateUserBaseInfo(data) {
     return request({
-      url: `/template-api/base-userinfo`,
+      url: `/forest-api/base-userinfo`,
       method: 'put',
       data
     })
@@ -146,7 +146,7 @@ export const CommonApi = {
   // 查询用户列表
   getUserList(params) {
     return request({
-      url: `/template-api/base-userinfo/search`,
+      url: `/forest-api/base-userinfo/search`,
       method: 'get',
       params
     })
@@ -154,7 +154,7 @@ export const CommonApi = {
   // 导入用户数据
   uploadUsers(data) {
     return request({
-      url: `/template-api/base-userinfo/upload`,
+      url: `/forest-api/base-userinfo/upload`,
       method: 'post',
       data
     })
@@ -162,7 +162,7 @@ export const CommonApi = {
   // 添加账号
   addAccount(data) {
     return request({
-      url: `/template-api/account`,
+      url: `/forest-api/account`,
       method: 'post',
       data
     })
@@ -170,7 +170,7 @@ export const CommonApi = {
   // 更新账号
   updateAccount(data) {
     return request({
-      url: `/template-api/account`,
+      url: `/forest-api/account`,
       method: 'put',
       data
     })
@@ -178,7 +178,7 @@ export const CommonApi = {
   // login
   login(data) {
     return request({
-      url: `/template-api/account/login`,
+      url: `/forest-api/account/login`,
       method: 'post',
       data
     })
@@ -186,14 +186,14 @@ export const CommonApi = {
   // logout
   logout() {
     return request({
-      url: `/template-api/account/logout`,
+      url: `/forest-api/account/logout`,
       method: 'get'
     })
   },
   // register
   register(data) {
     return request({
-      url: `/template-api/account/register`,
+      url: `/forest-api/account/register`,
       method: 'psot',
       data
     })
@@ -201,7 +201,7 @@ export const CommonApi = {
   // 获取账号列表
   getAccountList(params) {
     return request({
-      url: `/template-api/account/search`,
+      url: `/forest-api/account/search`,
       method: 'get',
       params
     })
@@ -209,14 +209,14 @@ export const CommonApi = {
   // 删除账号
   delAccountById(id) {
     return request({
-      url: `/template-api/account/${id}`,
+      url: `/forest-api/account/${id}`,
       method: 'delete'
     })
   },
   // 保存基本配置
   saveBaseInfo(data) {
     return request({
-      url: `/template-api/base-config`,
+      url: `/forest-api/base-config`,
       method: 'post',
       data
     })
@@ -224,7 +224,7 @@ export const CommonApi = {
   // 更新基本配置
   updateBaseInfo(data) {
     return request({
-      url: `/template-api/base-config`,
+      url: `/forest-api/base-config`,
       method: 'put',
       data
     })
@@ -232,7 +232,7 @@ export const CommonApi = {
   // 基本配置查询
   getBaseInfoList(params) {
     return request({
-      url: `/template-api/base-config/search`,
+      url: `/forest-api/base-config/search`,
       method: 'get',
       params
     })
@@ -240,19 +240,19 @@ export const CommonApi = {
   // 删除基本配置
   delBaseInfoById(id) {
     return request({
-      url: `/template-api/base-config/${id}`,
+      url: `/forest-api/base-config/${id}`,
       method: 'delete'
     })
   },
   getAreaByCode(code) {
     return request({
-      url: `/template-api/area/getOne/${code}`,
+      url: `/forest-api/area/getOne/${code}`,
       method: 'get'
     })
   },
   getAreaList(pcode) {
     return request({
-      url: `/template-api/area/list/${pcode}`,
+      url: `/forest-api/area/list/${pcode}`,
       method: 'get'
     })
   }

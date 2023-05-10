@@ -102,10 +102,10 @@ export default {
       loading3: false,
       selectId: '',
       queryParams: {
-        name: '',
-        phone: '',
-        village: '',
-        idcard: '',
+        name: undefined,
+        phone: undefined,
+        village: undefined,
+        idcard: undefined,
         date: []
       },
       value: ''
@@ -121,16 +121,20 @@ export default {
       const { name, phone, village, idcard, date } = this.queryParams
       let [startTime, endTime] = date
 
-      startTime = startTime ? startTime + ' 00:00:00' : ''
-      endTime = endTime ? endTime + ' 23:59:59' : ''
+      startTime = startTime ? startTime + ' 00:00:00' : undefined
+      endTime = endTime ? endTime + ' 23:59:59' : undefined
 
       const params = { name, phone, village, idcard, startTime, endTime, page, size }
       this.loading = true
-      const { body, code } = await CommonApi.getUserList(params)
-      this.loading = false
-      if (code !== 0) return
-      this.userList = body.list
-      this.total = body.total
+      try {
+        const { body, code } = await CommonApi.getUserList(params)
+        this.loading = false
+        if (code !== 0) return
+        this.userList = body.list
+        this.total = body.total
+      } catch {
+        this.loading = false
+      }
     },
     onSearch() {
       this.page = 1

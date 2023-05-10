@@ -19,20 +19,20 @@
       </el-form>
     </el-card>
     <el-card class="box-card" style="margin-top: 24px">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="activeName">
         <el-tab-pane label="相差" name="first">
-          <div class="text item">allocate: {{ diffData.allocate }}</div>
-          <div class="text item">diff: {{ diffData.diff }}</div>
-          <div class="text item">street: {{ diffData.street }}</div>
-          <div class="text item">total: {{ diffData.total }}</div>
-          <div class="text item">village: {{ diffData.village }}</div>
+          <div class="text item">乡镇: {{ diffData.street }}</div>
+          <div class="text item">村落: {{ diffData.village }}</div>
+          <div class="text item">总面积: {{ diffData.total }}</div>
+          <div class="text item">已分配面积: {{ diffData.allocate }}</div>
+          <div class="text item">相差: {{ diffData.diff }}</div>
         </el-tab-pane>
         <el-tab-pane label="乡村相差" name="second">
-          <div class="text item">allocate: {{ villageDiffData.allocate }}</div>
-          <div class="text item">diff: {{ villageDiffData.diff }}</div>
-          <div class="text item">street: {{ villageDiffData.street }}</div>
-          <div class="text item">total: {{ villageDiffData.total }}</div>
-          <div class="text item">village: {{ villageDiffData.village }}</div>
+          <div class="text item">乡镇: {{ villageDiffData.street }}</div>
+          <div class="text item">村落: {{ villageDiffData.village }}</div>
+          <div class="text item">总面积: {{ villageDiffData.total }}</div>
+          <div class="text item">已分配面积: {{ villageDiffData.allocate }}</div>
+          <div class="text item">相差: {{ villageDiffData.diff }}</div>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -130,6 +130,8 @@ export default {
   },
   mounted() {
     this.getList()
+    this.getGyDiff()
+    this.getVillageGyDiff()
   },
   methods: {
     async getList() {

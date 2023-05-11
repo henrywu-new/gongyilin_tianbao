@@ -24,7 +24,7 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="ruleForm.password" />
         </el-form-item>
-        <el-form-item label="村庄" prop="village">
+        <el-form-item v-if="role !== 'superadmin'" label="村庄" prop="village">
           <el-select v-model="ruleForm.village" placeholder="请选择">
             <el-option v-for="item in villageList" :key="item.id" :label="item.name" :value="item.name" />
           </el-select>
@@ -97,6 +97,12 @@ export default {
       },
       loading: false,
       villageList: []
+    }
+  },
+  computed: {
+    role() {
+      const { userinfo } = this.$store.getters
+      return userinfo.id === '0' ? 'superadmin' : !userinfo.village ? 'admin' : 'normal'
     }
   },
   created() {

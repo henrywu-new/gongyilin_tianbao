@@ -13,7 +13,7 @@ const whiteList = ['/login', '/register'] // no redirect whitelist
 function isAuth(to) {
   try {
     const { userinfo } = store.getters
-    const role = userinfo.id === '0' ? 'superadmin' : userinfo.village ? 'admin' : 'normal'
+    const role = userinfo.id === '0' ? 'superadmin' : !userinfo.village ? 'admin' : 'normal'
     return to.meta.roles.includes(role)
   } catch {
     return true

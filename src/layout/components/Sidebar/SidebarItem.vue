@@ -95,7 +95,7 @@ export default {
     isAuth(item) {
       try {
         const { userinfo } = this.$store.getters
-        const role = userinfo.id === '0' ? 'superadmin' : userinfo.village ? 'admin' : 'normal'
+        const role = userinfo.id === '0' ? 'superadmin' : !userinfo.village ? 'admin' : 'normal'
         return item.meta.roles.includes(role)
       } catch {
         return true

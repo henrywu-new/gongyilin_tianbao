@@ -54,13 +54,12 @@ service.interceptors.response.use(
   (response) => {
     const res = response.data
     const { headers, request, data } = response
-
     // if the custom code is not 20000, it is judged as an error.
     if (request?.responseType === 'blob') {
       const blob = new Blob([data], {
-        type: 'application/vnd.ms-word'
+        type: data.type || 'application/vnd.ms-excel'
       })
-      const filename = getResHeadersFileName(headers) || Date.now().toString() + '.docx'
+      const filename = getResHeadersFileName(headers) || Date.now().toString() + '.xlsx'
       if (window.navigator.msSaveOrOpenBlob) {
         // 兼容IE10
         window.navigator.msSaveBlob(blob, filename)

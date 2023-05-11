@@ -66,13 +66,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user',
     name: 'user',
-    meta: { roles: ['admin'], icon: 'el-icon-user-solid' },
+    meta: { roles: ['superadmin', 'admin'], icon: 'el-icon-user-solid' },
     children: [
       {
         path: '/user',
         meta: {
           title: '用户管理',
-          roles: ['admin']
+          roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/user/index')
       },
@@ -81,7 +81,7 @@ export const constantRoutes = [
         name: 'userAdd',
         meta: {
           title: '添加用户',
-          roles: ['admin']
+          roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/user/add'),
         hidden: true
@@ -91,7 +91,7 @@ export const constantRoutes = [
         name: 'userEdit',
         meta: {
           title: '修改用户',
-          roles: ['admin']
+          roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/user/edit'),
         hidden: true
@@ -103,13 +103,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user/baseinfo',
     name: 'userBase',
-    meta: { roles: ['admin'], icon: 'el-icon-user-solid' },
+    meta: { roles: ['superadmin', 'admin'], icon: 'el-icon-user-solid' },
     children: [
       {
         path: '/user/baseinfo',
         meta: {
           title: '用户基础数据',
-          roles: ['admin']
+          roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/baseinfo/index')
       },
@@ -117,7 +117,7 @@ export const constantRoutes = [
         path: '/user/baseinfo/add',
         meta: {
           title: '添加用户基础数据',
-          roles: ['admin']
+          roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/baseinfo/add'),
         hidden: true
@@ -127,7 +127,7 @@ export const constantRoutes = [
         name: 'baseinfEdit',
         meta: {
           title: '修改用户基础数据',
-          roles: ['admin']
+          roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/baseinfo/edit'),
         hidden: true
@@ -220,13 +220,13 @@ export const constantRoutes = [
       //   path: '/gongyilin/diff',
       //   name: 'gongyilinDiff',
       //   component: () => import('@/views/gongyilin/diff'),
-      //   meta: { title: '公益林相差', roles: ['admin'] }
+      //   meta: { title: '公益林相差', roles: ['superadmin', 'admin'] }
       // },
       // {
       //   path: '/gongyilin/diff-village',
       //   name: 'gongyilinDiffVillage',
       //   component: () => import('@/views/gongyilin/diff-village'),
-      //   meta: { title: '乡村公益林相差', roles: ['admin'] }
+      //   meta: { title: '乡村公益林相差', roles: ['superadmin', 'admin'] }
       // }
     ]
   },
@@ -260,13 +260,13 @@ export const constantRoutes = [
       //   path: '/tianbao/diff',
       //   name: 'tianbaoDiff',
       //   component: () => import('@/views/tianbao/diff'),
-      //   meta: { title: '天保相差', roles: ['admin'] }
+      //   meta: { title: '天保相差', roles: ['superadmin', 'admin'] }
       // },
       // {
       //   path: '/tianbao/diff-village',
       //   name: 'tianbaoDiffVillage',
       //   component: () => import('@/views/tianbao/diff-village'),
-      //   meta: { title: '乡村天保相差', roles: ['admin'] }
+      //   meta: { title: '乡村天保相差', roles: ['superadmin', 'admin'] }
       // }
     ]
   },

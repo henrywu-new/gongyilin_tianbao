@@ -255,6 +255,20 @@ export const CommonApi = {
       url: `/forest-api/area/list/${pcode}`,
       method: 'get'
     })
+  },
+  exportGyExcel() {
+    return request({
+      url: `/forest-api/public-allowance/download`,
+      method: 'get',
+      responseType: 'blob'
+    })
+  },
+  exportTbExcel() {
+    return request({
+      url: `/forest-api/tempearl-allowance/download`,
+      method: 'get',
+      responseType: 'blob'
+    })
   }
 }
 

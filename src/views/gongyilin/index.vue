@@ -21,18 +21,22 @@
     <el-card class="box-card" style="margin-top: 24px">
       <el-tabs v-model="activeName">
         <el-tab-pane label="相差" name="first">
-          <div class="text item">乡镇: {{ diffData.street }}</div>
-          <div class="text item">村落: {{ diffData.village }}</div>
-          <div class="text item">总面积: {{ diffData.total }}</div>
-          <div class="text item">已分配面积: {{ diffData.allocate }}</div>
-          <div class="text item">相差: {{ diffData.diff }}</div>
+          <el-table :data="diffList" style="width: 100%">
+            <el-table-column prop="street" label="乡镇" width="180" />
+            <el-table-column prop="village" label="村落" width="180" />
+            <el-table-column prop="total" label="总面积" width="140" />
+            <el-table-column prop="allocate" label="已分配面积" width="100" />
+            <el-table-column prop="diff" label="相差" />
+          </el-table>
         </el-tab-pane>
         <el-tab-pane label="乡村相差" name="second">
-          <div class="text item">乡镇: {{ villageDiffData.street }}</div>
-          <div class="text item">村落: {{ villageDiffData.village }}</div>
-          <div class="text item">总面积: {{ villageDiffData.total }}</div>
-          <div class="text item">已分配面积: {{ villageDiffData.allocate }}</div>
-          <div class="text item">相差: {{ villageDiffData.diff }}</div>
+          <el-table :data="villageDiffList" style="width: 100%">
+            <el-table-column prop="street" label="乡镇" width="180" />
+            <el-table-column prop="village" label="村落" width="180" />
+            <el-table-column prop="total" label="总面积" width="140" />
+            <el-table-column prop="allocate" label="已分配面积" width="100" />
+            <el-table-column prop="diff" label="相差" />
+          </el-table>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -42,6 +46,7 @@
           <el-button type="primary" @click="() => $router.push('/gongyilin/add')">添加</el-button>
           <el-upload action="" :before-upload="beforeUpload" :show-file-list="false" :http-request="handleUpload">
             <el-button type="primary">导入数据</el-button>
+            <el-button type="primary" :loading="loading4" @click="exportGyExcel">导出年度数据</el-button>
           </el-upload>
         </div>
       </div>
@@ -107,6 +112,7 @@ export default {
       loading: false,
       loading2: false,
       loading3: false,
+      loading4: false,
       selectId: '',
       queryParams: {
         ownership: '',
@@ -115,20 +121,8 @@ export default {
       },
       value: '',
       activeName: 'first',
-      diffData: {
-        allocate: 0,
-        diff: 0,
-        street: '',
-        total: 0,
-        village: ''
-      },
-      villageDiffData: {
-        allocate: 0,
-        diff: 0,
-        street: '',
-        total: 0,
-        village: ''
-      }
+      diffList: [],
+      villageDiffList: []
     }
   },
   mounted() {
@@ -161,12 +155,12 @@ export default {
     async getVillageGyDiff() {
       const { body, code } = await CommonApi.getVillageGyDiff()
       if (code !== 0) return
-      this.villageDiffData = body
+      this.villageDiffList = body
     },
     async getGyDiff() {
       const { body, code } = await CommonApi.getGyDiff()
       if (code !== 0) return
-      this.diffData = body
+      this.diffList = body ? [body] : []
     },
     beforeUpload() {},
     async handleUpload({ file }) {
@@ -210,6 +204,15 @@ export default {
     },
     handleEdit(data) {
       this.$router.push({ name: 'gongyilinEdit', query: { ...data }})
+    },
+    async exportGyExcel() {
+      this.loading4 = true
+      try {
+        await CommonApi.exportGyExcel()
+        this.loading4 = false
+      } catch {
+        this.loading4 = false
+      }
     }
   }
 }

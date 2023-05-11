@@ -39,7 +39,8 @@ module.exports = {
     },
     proxy: {
       '/forest-api': {
-        target: 'https://4948a578a0.yicp.fun',
+        // target: 'https://4948a578a0.yicp.fun',
+        target: 'http://hnfhzb.cyziyuan.cn',
         changeOrigin: true // 允许跨域
         // pathRewrite: {
         //   '^/forest-api': ''

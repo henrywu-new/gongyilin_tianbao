@@ -21,18 +21,22 @@
     <el-card class="box-card" style="margin-top: 24px">
       <el-tabs v-model="activeName">
         <el-tab-pane label="相差" name="first">
-          <div class="text item">乡镇: {{ diffData.street }}</div>
-          <div class="text item">村落: {{ diffData.village }}</div>
-          <div class="text item">总面积: {{ diffData.total }}</div>
-          <div class="text item">已分配面积: {{ diffData.allocate }}</div>
-          <div class="text item">相差: {{ diffData.diff }}</div>
+          <el-table :data="diffList" style="width: 100%">
+            <el-table-column prop="street" label="乡镇" width="180" />
+            <el-table-column prop="village" label="村落" width="180" />
+            <el-table-column prop="total" label="总面积" width="140" />
+            <el-table-column prop="allocate" label="已分配面积" width="100" />
+            <el-table-column prop="diff" label="相差" />
+          </el-table>
         </el-tab-pane>
         <el-tab-pane label="乡村相差" name="second">
-          <div class="text item">乡镇: {{ villageDiffData.street }}</div>
-          <div class="text item">村落: {{ villageDiffData.village }}</div>
-          <div class="text item">总面积: {{ villageDiffData.total }}</div>
-          <div class="text item">已分配面积: {{ villageDiffData.allocate }}</div>
-          <div class="text item">相差: {{ villageDiffData.diff }}</div>
+          <el-table :data="villageDiffList" style="width: 100%">
+            <el-table-column prop="street" label="乡镇" width="180" />
+            <el-table-column prop="village" label="村落" width="180" />
+            <el-table-column prop="total" label="总面积" width="140" />
+            <el-table-column prop="allocate" label="已分配面积" width="100" />
+            <el-table-column prop="diff" label="相差" />
+          </el-table>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -40,6 +44,7 @@
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
         <div style="display: flex; gap: 10px">
           <el-button type="primary" @click="() => $router.push('/gongyilin/add')">添加</el-button>
+          <el-button type="primary" :loading="loading4" @click="exportTbExcel">导出年度数据</el-button>
         </div>
       </div>
       <el-table v-loading="loading" :data="list" style="width: 100%">
@@ -104,6 +109,7 @@ export default {
       loading: false,
       loading2: false,
       loading3: false,
+      loading4: false,
       selectId: '',
       queryParams: {
         ownership: '',
@@ -112,26 +118,14 @@ export default {
       },
       value: '',
       activeName: 'first',
-      diffData: {
-        allocate: 0,
-        diff: 0,
-        street: '',
-        total: 0,
-        village: ''
-      },
-      villageDiffData: {
-        allocate: 0,
-        diff: 0,
-        street: '',
-        total: 0,
-        village: ''
-      }
+      diffList: [],
+      villageDiffList: []
     }
   },
   mounted() {
     this.getList()
-    this.getGyDiff()
-    this.getVillageGyDiff()
+    this.getTbDiff()
+    this.getVillageTbDiff()
   },
   methods: {
     async getList() {
@@ -151,15 +145,15 @@ export default {
       this.list = body.list
       this.total = body.total
     },
-    async getVillageGyDiff() {
-      const { body, code } = await CommonApi.getTbDiff()
-      if (code !== 0) return
-      this.villageDiffData = body
-    },
-    async getGyDiff() {
+    async getVillageTbDiff() {
       const { body, code } = await CommonApi.getVillageTbDiff()
       if (code !== 0) return
-      this.diffData = body
+      this.villageDiffList = body
+    },
+    async getTbDiff() {
+      const { body, code } = await CommonApi.getTbDiff()
+      if (code !== 0) return
+      this.diffList = body ? [body] : []
     },
     onSearch() {
       this.page = 1
@@ -195,10 +189,17 @@ export default {
     },
     handleEdit(data) {
       this.$router.push({ name: 'tianbaoEdit', query: { ...data }})
+    },
+    async exportTbExcel() {
+      this.loading4 = true
+      try {
+        await CommonApi.exportTbExcel()
+        this.loading4 = false
+      } catch {
+        this.loading4 = false
+      }
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-</style>
-
+<style lang="scss" scoped></style>

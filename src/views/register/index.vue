@@ -183,13 +183,14 @@ export default {
         this.loading = false
       })
       if (code === 0) {
-        const html = `<strong>乡镇森林防灭火值班管理系统</strong><br/><span>软件开发：湖南省平江县大洲乡农业综合服务中心 钟咨 邱河海 何旭东
-            <br/>2023年软件使用联系：13874099950（微信）</span><br/>
-          <img src="${this.qrcode}" style="display: block; width: 120px; height: 120px; margin: 10px auto" />
-          `
-        this.$alert(html, '注册成功！', {
-          dangerouslyUseHTMLString: true
-        })
+        // const html = `<strong>乡镇森林防灭火值班管理系统</strong><br/><span>软件开发：湖南省平江县大洲乡农业综合服务中心 钟咨 邱河海 何旭东
+        //     <br/>2023年软件使用联系：13874099950（微信）</span><br/>
+        //   <img src="${this.qrcode}" style="display: block; width: 120px; height: 120px; margin: 10px auto" />
+        //   `
+        // this.$alert(html, '注册成功！', {
+        //   dangerouslyUseHTMLString: true
+        // })
+        this.$message.error('注册成功！')
         this.$refs.ruleForm.resetFields()
       } else {
         this.$message.error('注册失败，请稍后重试！')

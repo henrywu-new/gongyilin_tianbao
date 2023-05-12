@@ -44,11 +44,14 @@
         <el-form-item label="银行代码" prop="bankCode">
           <el-input v-model="ruleForm.bankCode" />
         </el-form-item>
-        <el-form-item label="补助面积" prop="policyUnit">
+        <el-form-item label="期数" prop="periods">
+          <el-input v-model="ruleForm.periods" />
+        </el-form-item>
+        <el-form-item label="政策单位" prop="policyUnit">
           <el-input v-model="ruleForm.policyUnit" />
         </el-form-item>
-        <el-form-item label="补助数量" prop="policyUnit">
-          <el-input v-model="ruleForm.number" />
+        <el-form-item label="补助面积" prop="number">
+          <el-input v-model="ruleForm.number" placeholder="单位：亩" />
         </el-form-item>
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="validateForm('ruleForm')">提交</el-button>
@@ -73,7 +76,8 @@ const ruleForm = {
   bankName: '',
   bankCode: '',
   policyUnit: '',
-  number: ''
+  number: '',
+  periods: ''
 }
 
 const provinceCode = 430000

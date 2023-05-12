@@ -60,6 +60,7 @@ const provinceCode = 430000
 
 async function getAreaList(pcode = 100000) {
   const { body, code } = await CommonApi.getAreaList(pcode)
+  console.log(100000, body)
   return code === 0 ? body : []
 }
 
@@ -148,10 +149,10 @@ export default {
 
       const { code } = await CommonApi.addAccount(params)
       if (code === 0) {
-        this.$message.success('添加用户成功！')
+        this.$message.success('添加账号成功！')
         this.$router.go(-1)
       } else {
-        this.$message.error('添加用户失败！')
+        this.$message.error('添加账号失败！')
       }
       this.loading = false
     }

@@ -2,8 +2,8 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-form :inline="true" :model="queryParams" class="demo-form-inline">
-        <el-form-item label="姓名">
-          <el-input v-model="queryParams.username" placeholder="姓名" />
+        <el-form-item label="账号名称">
+          <el-input v-model="queryParams.username" placeholder="账号名称" />
         </el-form-item>
         <el-form-item label="电话">
           <el-input v-model="queryParams.mobile" placeholder="电话" />
@@ -19,7 +19,7 @@
     </el-card>
     <el-card class="box-card" style="margin-top: 24px">
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
-        <el-button type="primary" @click="() => $router.push('/user/add')">添加用户</el-button>
+        <el-button type="primary" @click="() => $router.push('/user/add')">添加账号</el-button>
       </div>
       <el-table v-loading="loading" :data="userList" style="width: 100%">
         <el-table-column prop="createDate" label="添加日期" width="140">
@@ -32,14 +32,14 @@
             <span> {{ scope.row.updateDate || '---' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="姓名" width="140" />
+        <el-table-column prop="username" label="账号名称" width="140" />
         <el-table-column prop="mobile" label="电话" width="120" />
-        <el-table-column prop="cityName" label="市区" width="180">
+        <el-table-column prop="cityName" label="市区" width="220">
           <template slot-scope="scope">
             <span>
               {{
                 `${scope.row.provinceName || '---'} / ${scope.row.cityName || '---'} / ${
-                  scope.row.countryName || '---'
+                  scope.row.countryName || '---'} / ${scope.row.streetName || '---'
                 }`
               }}</span>
           </template>
@@ -127,7 +127,8 @@ export default {
         village: ''
       },
       templateList: [],
-      value: ''
+      value: '',
+      villageList: []
     }
   },
   mounted() {
@@ -177,7 +178,7 @@ export default {
       this.loading3 = false
     },
     handleEdit(userinfo) {
-      this.$router.push({ name: 'tianbaoDiff', query: { ...userinfo }})
+      this.$router.push({ name: 'userEdit', query: { ...userinfo }})
     }
   }
 }

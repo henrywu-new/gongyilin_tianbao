@@ -149,7 +149,7 @@ export default {
       const { code } = await CommonApi.updateAccount(params)
       if (code === 0) {
         this.visible = false
-        this.$message.success('用户信息更新成功！')
+        this.$message.success('账号信息更新成功！')
         // const html = `<strong>乡镇森林防灭火值班管理系统</strong><br/><span>软件开发：湖南省平江县大洲乡农业综合服务中心 钟咨 邱河海 何旭东
         //     <br/>2023年软件使用联系：13874099950（微信）</span><br/>
         //   <img src="${this.qrcode}" style="display: block; width: 120px; height: 120px; margin: 10px auto" />
@@ -161,7 +161,7 @@ export default {
         //   }
         // })
       } else {
-        this.$message.error('用户信息更新失败！')
+        this.$message.error('账号信息更新失败！')
       }
       this.loading = false
     }

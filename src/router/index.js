@@ -71,7 +71,7 @@ export const constantRoutes = [
       {
         path: '/user',
         meta: {
-          title: '用户管理',
+          title: '账号管理',
           roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/user/index')
@@ -80,7 +80,7 @@ export const constantRoutes = [
         path: '/user/add',
         name: 'userAdd',
         meta: {
-          title: '添加用户',
+          title: '添加账号',
           roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/user/add'),
@@ -90,7 +90,7 @@ export const constantRoutes = [
         path: '/user/edit',
         name: 'userEdit',
         meta: {
-          title: '修改用户',
+          title: '修改账号',
           roles: ['superadmin', 'admin']
         },
         component: () => import('@/views/user/edit'),
@@ -194,26 +194,26 @@ export const constantRoutes = [
     path: '/gyl',
     component: Layout,
     redirect: '/gongyilin',
-    meta: { title: '公益林', roles: ['admin'], icon: 'el-icon-s-shop' },
+    meta: { title: '公益林', roles: ['admin', 'normal'], icon: 'el-icon-s-shop' },
     children: [
       {
         path: '/gongyilin',
         name: 'gongyilin',
         component: () => import('@/views/gongyilin'),
-        meta: { title: '公益林', roles: ['admin'] }
+        meta: { title: '公益林', roles: ['admin', 'normal'] }
       },
       {
         path: '/gongyilin/add',
         name: 'gongyilinAdd',
         component: () => import('@/views/gongyilin/add'),
-        meta: { title: '添加', roles: ['admin'] },
+        meta: { title: '添加', roles: ['admin', 'normal'] },
         hidden: true
       },
       {
         path: '/gongyilin/edit',
         name: 'gongyilinEdit',
         component: () => import('@/views/gongyilin/edit'),
-        meta: { title: '修改', roles: ['admin'] },
+        meta: { title: '修改', roles: ['admin', 'normal'] },
         hidden: true
       }
       // {
@@ -234,26 +234,26 @@ export const constantRoutes = [
     path: '/tb',
     component: Layout,
     redirect: '/tianbao',
-    meta: { title: '天保', roles: ['admin'], icon: 'el-icon-s-shop' },
+    meta: { title: '天保', roles: ['admin', 'normal'], icon: 'el-icon-s-shop' },
     children: [
       {
         path: '/tianbao',
         name: 'tianbao',
         component: () => import('@/views/tianbao'),
-        meta: { title: '天保', roles: ['admin'] }
+        meta: { title: '天保', roles: ['admin', 'normal'] }
       },
       {
         path: '/tianbao/add',
         name: 'tianbaoAdd',
         component: () => import('@/views/tianbao/add'),
-        meta: { title: '添加', roles: ['admin'] },
+        meta: { title: '添加', roles: ['admin', 'normal'] },
         hidden: true
       },
       {
         path: '/tianbao/edit',
         name: 'tianbaoEdit',
         component: () => import('@/views/tianbao/edit'),
-        meta: { title: '修改', roles: ['admin'] },
+        meta: { title: '修改', roles: ['admin', 'normal'] },
         hidden: true
       }
       // {

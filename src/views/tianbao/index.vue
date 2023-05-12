@@ -44,6 +44,9 @@
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
         <div style="display: flex; gap: 10px">
           <el-button type="primary" @click="() => $router.push('/gongyilin/add')">添加</el-button>
+          <el-upload v-if="isAuth" action="" :before-upload="beforeUpload" :show-file-list="false" :http-request="handleUpload">
+            <el-button type="primary">导入上一年度数据</el-button>
+          </el-upload>
           <el-button type="primary" :loading="loading4" @click="exportTbExcel">导出年度数据</el-button>
         </div>
       </div>
@@ -119,8 +122,14 @@ export default {
       value: '',
       activeName: 'first',
       diffList: [],
-      villageDiffList: []
+      villageDiffList: [],
+      isAuth: false
     }
+  },
+  created() {
+    const { userinfo } = this.$store.getters
+    const role = userinfo.id === '0' ? 'superadmin' : !userinfo.village ? 'admin' : 'normal'
+    this.isAuth = role !== 'normal'
   },
   mounted() {
     this.getList()
@@ -154,6 +163,14 @@ export default {
       const { body, code } = await CommonApi.getTbDiff()
       if (code !== 0) return
       this.diffList = body ? [body] : []
+    },
+    beforeUpload() {},
+    async handleUpload({ file }) {
+      const formData = new FormData()
+      formData.append('file', file)
+      await CommonApi.uploadLastYearData(formData)
+      this.$message.success('导入数据成功！')
+      this.getList()
     },
     onSearch() {
       this.page = 1

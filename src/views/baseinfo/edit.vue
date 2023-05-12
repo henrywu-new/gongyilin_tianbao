@@ -13,9 +13,7 @@
           <el-input v-model="ruleForm.code" />
         </el-form-item>
         <el-form-item label="对象姓名" prop="name">
-          <el-select v-model="ruleForm.name" placeholder="请选择用户" @change="onChange">
-            <el-option v-for="item in userList" :key="item.id" :label="item.username" :value="item.username" />
-          </el-select>
+          <el-input v-model="ruleForm.name" placeholder="对象姓名" />
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
           <el-input v-model.number="ruleForm.phone" disabled maxlength="11" />
@@ -27,9 +25,7 @@
           <el-input v-model="ruleForm.homeNo" />
         </el-form-item>
         <el-form-item label="家庭地址" prop="familyAddress">
-          <el-select v-model="ruleForm.familyAddress" placeholder="请选择">
-            <el-option v-for="item in villageList" :key="item.id" :label="item.name" :value="item.name" />
-          </el-select>
+          <el-input v-model="ruleForm.familyAddress" placeholder="家庭地址" />
         </el-form-item>
         <el-form-item label="家庭成员数" prop="familyMember">
           <el-input v-model="ruleForm.familyMember" />
@@ -103,9 +99,7 @@ export default {
         // region: [{ required: true, message: '请选择地区', trigger: 'change' }],
         // status: [{ required: true, message: '请选择状态', trigger: 'change' }]
       },
-      loading: false,
-      villageList: [],
-      userList: []
+      loading: false
     }
   },
   created() {
@@ -124,32 +118,8 @@ export default {
       bankName,
       bankCode
     }
-    this.getVillageList()
-    this.getUsers()
   },
   methods: {
-    async getUsers() {
-      const params = { page: 1, size: 500 }
-      this.loading = true
-      const { body, code } = await CommonApi.getAccountList(params)
-      this.loading = false
-      if (code !== 0) return
-      this.userList = body.list
-    },
-    async getVillageList() {
-      const params = { page: 1, size: 500 }
-      this.loading = true
-      const { body, code } = await CommonApi.getCountryInfo(params)
-      this.loading = false
-      if (code !== 0) return
-      this.villageList = body.list
-    },
-    onChange(username) {
-      const target = this.userList.find((item) => item.username === username)
-      if (target) {
-        this.ruleForm.phone = target.mobile
-      }
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

@@ -1,6 +1,44 @@
 <template>
   <div class="app-container">
     <el-card class="box-card">
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="相差" name="first">
+          <el-table :data="diffList" style="width: 100%">
+            <el-table-column prop="street" label="乡镇" width="180" />
+            <el-table-column prop="village" label="村落" width="180" />
+            <el-table-column prop="total" label="总面积" width="140">
+              <template slot-scope="scope">
+                <span style="color: #409eff"> {{ scope.row.total || 0 }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="allocate" label="已分配面积" width="100" />
+            <el-table-column prop="diff" label="相差">
+              <template slot-scope="scope">
+                <span style="color: #f56c6c"> {{ scope.row.diff || 0 }}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane v-if="isAuth" label="乡村相差" name="second">
+          <el-table :data="villageDiffList" style="width: 100%">
+            <el-table-column prop="street" label="乡镇" width="180" />
+            <el-table-column prop="village" label="村落" width="180" />
+            <el-table-column prop="total" label="总面积" width="140">
+              <template slot-scope="scope">
+                <span style="color: #409eff"> {{ scope.row.total || 0 }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="allocate" label="已分配面积" width="100" />
+            <el-table-column prop="diff" label="相差">
+              <template slot-scope="scope">
+                <span style="color: #f56c6c"> {{ scope.row.diff || 0 }}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
+    <el-card class="box-card" style="margin-top: 24px">
       <el-form :inline="true" :model="queryParams" class="demo-form-inline">
         <el-form-item label="添加日期">
           <el-date-picker
@@ -12,33 +50,26 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
+        <el-form-item label="用户名">
+          <el-input v-model="queryParams.name" />
+        </el-form-item>
+        <el-form-item label="身份证号">
+          <el-input v-model="queryParams.idcard" />
+        </el-form-item>
+        <el-form-item label="手机号码">
+          <el-input v-model="queryParams.phone" />
+        </el-form-item>
+        <el-form-item label="银行账号">
+          <el-input v-model="queryParams.account" />
+        </el-form-item>
+        <el-form-item label="村名">
+          <el-input v-model="queryParams.familyAddress" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="loading" @click="onSearch">查询</el-button>
           <el-button @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
-    </el-card>
-    <el-card class="box-card" style="margin-top: 24px">
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="相差" name="first">
-          <el-table :data="diffList" style="width: 100%">
-            <el-table-column prop="street" label="乡镇" width="180" />
-            <el-table-column prop="village" label="村落" width="180" />
-            <el-table-column prop="total" label="总面积" width="140" />
-            <el-table-column prop="allocate" label="已分配面积" width="100" />
-            <el-table-column prop="diff" label="相差" />
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="乡村相差" name="second">
-          <el-table :data="villageDiffList" style="width: 100%">
-            <el-table-column prop="street" label="乡镇" width="180" />
-            <el-table-column prop="village" label="村落" width="180" />
-            <el-table-column prop="total" label="总面积" width="140" />
-            <el-table-column prop="allocate" label="已分配面积" width="100" />
-            <el-table-column prop="diff" label="相差" />
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
     </el-card>
     <el-card class="box-card" style="margin-top: 24px">
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
@@ -115,9 +146,12 @@ export default {
       loading4: false,
       selectId: '',
       queryParams: {
-        ownership: '',
-        operateType: '',
-        date: []
+        phone: '',
+        date: [],
+        name: '',
+        idcard: '',
+        account: '',
+        familyAddress: ''
       },
       value: '',
       activeName: 'first',
@@ -159,6 +193,7 @@ export default {
       }
     },
     async getVillageGyDiff() {
+      if (!this.isAuth) return
       const { body, code } = await CommonApi.getVillageGyDiff()
       if (code !== 0) return
       this.villageDiffList = body

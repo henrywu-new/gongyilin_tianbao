@@ -16,7 +16,7 @@
           <el-input v-model="ruleForm.name" placeholder="对象姓名" />
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input v-model.number="ruleForm.phone" disabled maxlength="11" />
+          <el-input v-model.number="ruleForm.phone" maxlength="11" />
         </el-form-item>
         <el-form-item label="身份证号码" prop="idcard">
           <el-input v-model="ruleForm.idcard" maxlength="18" />

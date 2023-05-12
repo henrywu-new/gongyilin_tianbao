@@ -45,7 +45,7 @@
           <el-input v-model="ruleForm.bankCode" disabled />
         </el-form-item>
         <el-form-item label="补助面积" prop="policyUnit">
-          <el-input v-model="ruleForm.policyUnit" />
+          <el-input v-model="ruleForm.policyUnit" placeholder="单位：亩" />
         </el-form-item>
         <el-form-item label="补助数量" prop="policyUnit">
           <el-input v-model="ruleForm.number" />

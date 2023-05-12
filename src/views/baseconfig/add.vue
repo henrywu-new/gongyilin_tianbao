@@ -10,10 +10,10 @@
         class="dialog-form"
       >
         <el-form-item label="补助面积" prop="area">
-          <el-input v-model.number="ruleForm.area" placeholder="补助面积" />
+          <el-input v-model.number="ruleForm.area" placeholder="单位：亩" />
         </el-form-item>
         <el-form-item label="补助标准单位" prop="areaUnit">
-          <el-input v-model.number="ruleForm.areaUnit" placeholder="补助标准单位" />
+          <el-input v-model.number="ruleForm.areaUnit" placeholder="单位：元/亩" />
         </el-form-item>
         <el-form-item label="村落" prop="village">
           <el-select v-model="ruleForm.village" placeholder="请选择">

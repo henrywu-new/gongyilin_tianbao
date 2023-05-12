@@ -31,7 +31,7 @@
       <div style="display: flex; justify-content: space-between; margin-bottom: 20px">
         <div style="display: flex; gap: 10px">
           <el-button type="primary" @click="() => $router.push('/user/baseinfo/add')">添加用户基础数据</el-button>
-          <el-upload action="" :before-upload="beforeUpload" :show-file-list="false" :http-request="handleUpload">
+          <el-upload v-if="isAuth" action="" :before-upload="beforeUpload" :show-file-list="false" :http-request="handleUpload">
             <el-button type="primary">导入用户基础数据</el-button>
           </el-upload>
         </div>
@@ -108,8 +108,13 @@ export default {
         idcard: undefined,
         date: []
       },
-      value: ''
+      value: '',
+      isAuth: false
     }
+  },
+  created() {
+    const { userinfo } = this.$store.getters
+    this.isAuth = !userinfo.village
   },
   mounted() {
     this.getUsers()
